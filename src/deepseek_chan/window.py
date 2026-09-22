@@ -136,6 +136,22 @@ class PetWindow(QWidget):
         self._quip_index[category] = (index + 1) % len(options)
         return options[index]
 
+    def _react(self, kind: str, ts: float, heart_at=None) -> None:
+        """Shared pat/flick reaction: sets the right line, hearts and mood."""
+        self.brain.handle(kind, "", ts)
+        if kind == "pat":
+            quip = self._quip("pat")
+            if quip:
+                self.brain.set_bubble(quip, ts)
+            x, y = heart_at if heart_at else (WINDOW_W / 2 + 40, 250)
+            self.particles.spawn("heart", x, y, ts, life=1.6)
+            self.mood.bump(0.03)
+        elif kind == "flick":
+            quip = self._quip("flick")
+            if quip:
+                self.brain.set_bubble(quip, ts)
+            self._restore_if_hidden()
+
     def _on_event(self, kind: str, detail: str, ts: float) -> None:
         previous = self.brain.status(ts).state
         self.brain.handle(kind, detail, ts)
@@ -157,23 +173,14 @@ class PetWindow(QWidget):
             self.mood.bump(-0.06)
         elif kind == "tool_result":
             if detail.endswith(":ok"):
-                self.brain.handle("pat", "", ts)
-                self.particles.spawn("heart", WINDOW_W / 2 + 46, 226, ts, life=1.2)
-                self.mood.bump(0.04)
+                self._react("pat", ts)
             elif detail.endswith(":fail"):
                 self.brain.handle("error", "", ts)
                 self.mood.bump(-0.04)
         elif kind == "pat":
-            quip = self._quip("pat")
-            if quip:
-                self.brain.set_bubble(quip, ts)
-            self.particles.spawn("heart", WINDOW_W / 2 + 40, 250, ts, life=1.6)
-            self.mood.bump(0.03)
+            self._react("pat", ts)
         elif kind == "flick":
-            quip = self._quip("flick")
-            if quip:
-                self.brain.set_bubble(quip, ts)
-            self._restore_if_hidden()
+            self._react("flick", ts)
         elif kind in ("summon", "wake"):
             quip = self._quip("wake" if kind == "wake" else "surprised")
             if quip:
@@ -372,12 +379,14 @@ class PetWindow(QWidget):
         now = time.time()
         region = self._pressed_region
         if region == "hair":
-            self.brain.handle("pat", "", now)
-            self.particles.spawn("heart", self._press_local.x() / self._scale,
-                                 self._press_local.y() / self._scale - 40, now, life=1.6)
-            self.mood.bump(0.03)
+            self._react(
+                "pat",
+                now,
+                heart_at=(self._press_local.x() / self._scale,
+                          self._press_local.y() / self._scale - 40),
+            )
         elif region == "nose":
-            self.brain.handle("flick", "", now)
+            self._react("flick", now)
         # belly (drag), head and body clicks are neutral when not dragged
 
     # ------------------------------------------------------------------ util

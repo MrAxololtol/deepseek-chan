@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to DeepSeek-chan are recorded here. Every push to GitHub
+All notable changes to Mochi are recorded here. Every push to GitHub
 adds an entry, newest first, with the commit it shipped in.
 
 ## 2026-09-23
@@ -9,17 +9,17 @@ adds an entry, newest first, with the commit it shipped in.
 - The pet now watches the accent `colorChange` writes to
   `~/.config/polybar/colors.ini` (rofi/kitty/dunst share it) and **hue-shifts her
   blue parts** — hair, outfit and trim — to match live, leaving skin untouched.
-- Recolours are cached per hue delta (`~/.cache/deepseek-chan/theme-pack/`).
-- `deepseek-chan theme` re-reads the accent; `deepseek-chan theme '#hex'` pins one.
+- Recolours are cached per hue delta (`~/.cache/mochi/theme-pack/`).
+- `mochi theme` re-reads the accent; `mochi theme '#hex'` pins one.
 - New config: `theme_follow`, `theme_accent_file`, `theme_color`, `theme_base_hue`.
 
 ### Ask-opencode box + pipx install — `da978ab`
-- **Ask her anything:** Super+Alt-click the pet (or `deepseek-chan ask`) opens a
+- **Ask her anything:** Super+Alt-click the pet (or `mochi ask`) opens a
   small input box above her; Enter runs `opencode run "<question>"` in a terminal.
-  `deepseek-chan ask --hover` only opens when the pointer is over the pet; the
+  `mochi ask --hover` only opens when the pointer is over the pet; the
   sxhkd binding uses that. The command is configurable via `ask_command` /
   `ask_hotkey` (`{prompt}` is substituted).
-- `deepseek-chan install-hotkey` now installs the summon and ask bindings.
+- `mochi install-hotkey` now installs the summon and ask bindings.
 - Switched to a self-contained **pipx** install so the launcher no longer depends
   on the source checkout.
 
@@ -92,7 +92,7 @@ adds an entry, newest first, with the commit it shipped in.
 - 116 Python + 14 Node tests, ruff clean, CI workflow, README and docs.
 
 ### Baseline — `65b0d8d`
-- Initial working SVG DeepSeek-chan pet: transparent overlay, click-through,
+- Initial working SVG Mochi pet: transparent overlay, click-through,
   drag, state machine (listening/thinking/thinking-longer/working/finished/
   error/pat/surprised/sleep), blink, breathing, idle flip, ahoge, Zzz, and the
   opencode plugin bridge.
@@ -101,4 +101,4 @@ adds an entry, newest first, with the commit it shipped in.
 
 ### `MrAxololtol/dotfiles`
 - `093cf2a` — bspwm: autostart the pet on login (guarded, only if installed).
-- `bc55d5e` — picom: exclude `deepseek-chan` from blur, shadow, fade and rounded corners.
+- `bc55d5e` — picom: exclude `mochi` from blur, shadow, fade and rounded corners.

@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from deepseek_chan import doctor
+from mochi import doctor
 
 
 @pytest.fixture
@@ -15,7 +15,7 @@ def environment(tmp_path, monkeypatch):
         (assets / name).write_text('<svg xmlns="http://www.w3.org/2000/svg"/>')
     plugins = tmp_path / "plugins"
     plugins.mkdir()
-    (plugins / "deepseek-pet.js").write_text("DeepSeekChanPlugin tool.execute.before")
+    (plugins / "mochi-pet.js").write_text("MochiPlugin tool.execute.before")
     monkeypatch.setattr(doctor, "_qt_check", lambda: ("test Qt", True))
     monkeypatch.setattr(doctor, "_mask_check", lambda: ("test backend", True))
     return dict(asset_dir=assets, plugin_dir=plugins, cache_dir=tmp_path / "cache")
@@ -52,15 +52,15 @@ def test_missing_plugin_does_not_create_directory(tmp_path):
     directory = tmp_path / "missing"
     detail, ok = doctor._plugin_check(tmp_path, directory)
     assert not ok
-    assert "deepseek-pet.js" in detail
+    assert "mochi-pet.js" in detail
     assert not directory.exists()
 
 
 def test_project_plugin_discovery(tmp_path, monkeypatch):
     monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "config"))
-    plugin = tmp_path / ".opencode" / "plugins" / "deepseek-pet.js"
+    plugin = tmp_path / ".opencode" / "plugins" / "mochi-pet.js"
     plugin.parent.mkdir(parents=True)
-    plugin.write_text("DeepSeekChanPlugin tool.execute.before")
+    plugin.write_text("MochiPlugin tool.execute.before")
     assert doctor._plugin_check(tmp_path, None)[1]
 
 

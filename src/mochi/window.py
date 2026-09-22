@@ -44,7 +44,7 @@ class PetWindow(QWidget):
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating, True)
         self.resize(round(WINDOW_W * self._scale), round(WINDOW_H * self._scale))
-        self.setWindowTitle("DeepSeek-chan")
+        self.setWindowTitle("Mochi")
 
         self._base_pack = (
             Path(cfg.sprite_pack).expanduser()

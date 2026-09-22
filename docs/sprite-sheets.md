@@ -44,4 +44,4 @@ there is no resizing, trimming, or repacking.
 
 Set `sprite_pack` to the sliced output directory to use the [PNG renderer](raster-packs.md).
 A readable `idle.png` is required; missing optional states fall back to available poses.
-The slicer and runtime share `src/deepseek_chan/manifest.py` as their canonical name source.
+The slicer and runtime share `src/mochi/manifest.py` as their canonical name source.

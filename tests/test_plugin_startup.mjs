@@ -6,7 +6,7 @@ import { posix } from 'node:path'
 import test from 'node:test'
 import { createContext, SourceTextModule, SyntheticModule } from 'node:vm'
 
-const source = readFileSync(new URL('../src/deepseek_chan/plugin/deepseek-pet.js', import.meta.url), 'utf8')
+const source = readFileSync(new URL('../src/mochi/plugin/mochi-pet.js', import.meta.url), 'utf8')
 
 async function start({ failures = 0, alive = false, storedPid = '4242' } = {}) {
   const commands = []
@@ -54,7 +54,7 @@ async function start({ failures = 0, alive = false, storedPid = '4242' } = {}) {
     }, { context })
   })
   await module.evaluate()
-  const hooks = await module.namespace.DeepSeekChanPlugin()
+  const hooks = await module.namespace.MochiPlugin()
   return { hooks, commands, writes, live }
 }
 
@@ -65,7 +65,7 @@ test('existing live process is reused', async () => {
 
 test('asynchronous ENOENT falls back and PID ownership stays with Python', async () => {
   const { commands, writes } = await start({ failures: 2 })
-  assert.deepEqual(commands, ['deepseek-chan', 'python3', 'python'])
+  assert.deepEqual(commands, ['mochi', 'python3', 'python'])
   assert.ok(writes.every(path => !path.endsWith('pet.pid')))
 })
 
@@ -78,17 +78,17 @@ test('all missing executables are best-effort, not a rejected plugin', async () 
 test('repeated hooks do not launch duplicates before the PID file appears', async () => {
   const { hooks, commands } = await start()
   await Promise.all([hooks['chat.message'](), hooks['chat.message'](), hooks['chat.message']()])
-  assert.deepEqual(commands, ['deepseek-chan'])
+  assert.deepEqual(commands, ['mochi'])
 })
 
 test('dead child is relaunched once across concurrent hooks', async () => {
   const { hooks, commands, live } = await start()
   live.clear()
   await Promise.all([hooks['chat.message'](), hooks['chat.message']()])
-  assert.deepEqual(commands, ['deepseek-chan', 'deepseek-chan'])
+  assert.deepEqual(commands, ['mochi', 'mochi'])
 })
 
 test('PID zero is ignored', async () => {
   const { commands } = await start({ storedPid: '0' })
-  assert.deepEqual(commands, ['deepseek-chan'])
+  assert.deepEqual(commands, ['mochi'])
 })

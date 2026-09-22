@@ -1,9 +1,9 @@
-"""Configuration + filesystem locations for DeepSeek-chan.
+"""Configuration + filesystem locations for Mochi.
 
 Config resolution order (later wins):
 
 1. built-in defaults (this file)
-2. ``<user config dir>/deepseek-chan/config.toml``
+2. ``<user config dir>/mochi/config.toml``
 3. a ``--config`` path passed on the command line
 
 The runtime cache (``state.json``, ``mood.json``, logs) lives in the user cache
@@ -24,7 +24,7 @@ except ModuleNotFoundError:  # pragma: no cover - older Pythons
 
 from platformdirs import user_cache_dir, user_config_dir
 
-APP_NAME = "deepseek-chan"
+APP_NAME = "mochi"
 
 
 def cache_dir() -> Path:

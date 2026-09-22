@@ -1,7 +1,7 @@
 # PNG sprite packs
 
 The pet ships with a bundled PNG character pack under
-`src/deepseek_chan/assets/adult/` and uses it by default. Set `sprite_pack` to a
+`src/mochi/assets/adult/` and uses it by default. Set `sprite_pack` to a
 directory of your own sliced PNGs to override it; SVG rendering is the fallback
 when no pack is present.
 
@@ -13,8 +13,8 @@ outfit = "hoodie"
 ```
 
 ```sh
-deepseek-chan run --config my-pet.toml
-python -m deepseek_chan.doctor --assets /absolute/path/to/sprites
+mochi run --config my-pet.toml
+python -m mochi.doctor --assets /absolute/path/to/sprites
 ```
 
 `idle.png` is required. The other canonical poses are optional. Each PNG is a
@@ -54,7 +54,7 @@ not retain an old input outline. Actual compositor support still varies by OS.
 ## Bundled artwork
 
 The bundled pack is a 16-pose adult character with transparent backgrounds, one PNG
-per state under `src/deepseek_chan/assets/adult/`. Because the source sheet had
+per state under `src/mochi/assets/adult/`. Because the source sheet had
 irregular row heights, each character was cropped by its true alpha bounds and
 normalized to a common baseline and scale rather than sliced on a fixed grid. The
 original concept images live under `art/character-designs/`.

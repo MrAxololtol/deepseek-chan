@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "deepseek-chan"
+name = "mochi"
 version = "0.1.0"
-description = "An interactive DeepSeek-chan anime-girl desktop pet overlay for the opencode TUI."
+description = "An interactive Mochi anime-girl desktop pet overlay for the opencode TUI."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
@@ -26,11 +26,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/MrAxololtol/deepseek-chan"
-Issues = "https://github.com/MrAxololtol/deepseek-chan/issues"
+Homepage = "https://github.com/MrAxololtol/mochi"
+Issues = "https://github.com/MrAxololtol/mochi/issues"
 
 [project.scripts]
-deepseek-chan = "deepseek_chan.cli:main"
+mochi = "mochi.cli:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
@@ -40,4 +40,4 @@ include-package-data = true
 where = ["src"]
 
 [tool.setuptools.package-data]
-deepseek_chan = ["assets/*.svg", "assets/adult/*.png", "plugin/*.js", "config.example.toml", "themes/*.toml"]
+mochi = ["assets/*.svg", "assets/adult/*.png", "plugin/*.js", "config.example.toml", "themes/*.toml"]

@@ -1,4 +1,4 @@
-"""Command line interface: ``deepseek-chan <command>``."""
+"""Command line interface: ``mochi <command>``."""
 
 from __future__ import annotations
 
@@ -48,9 +48,9 @@ def cmd_run(args: argparse.Namespace) -> int:
 
 
 def cmd_install_plugin(args: argparse.Namespace) -> int:
-    src = Path(__file__).resolve().parent / "plugin" / "deepseek-pet.js"
+    src = Path(__file__).resolve().parent / "plugin" / "mochi-pet.js"
     dest_dir = _opencode_plugin_dir(args.project)
-    dest = dest_dir / "deepseek-pet.js"
+    dest = dest_dir / "mochi-pet.js"
     shutil.copyfile(src, dest)
     print(f"installed opencode plugin -> {dest}")
     print("restart opencode for the plugin to load")
@@ -94,12 +94,12 @@ def cmd_install_hotkey(args: argparse.Namespace) -> int:
     rc = base / "sxhkd" / "sxhkdrc"
     ask_hotkey = getattr(args, "ask_hotkey", "super + alt + button1")
     block = (
-        "\n# >>> deepseek-chan >>>\n"
+        "\n# >>> mochi >>>\n"
         f"{args.hotkey}\n"
-        "    deepseek-chan --summon\n"
+        "    mochi --summon\n"
         f"{ask_hotkey}\n"
-        "    deepseek-chan ask --hover\n"
-        "# <<< deepseek-chan <<<\n"
+        "    mochi ask --hover\n"
+        "# <<< mochi <<<\n"
     )
     if not rc.is_file():
         print(f"no sxhkdrc found at {rc}")
@@ -107,8 +107,8 @@ def cmd_install_hotkey(args: argparse.Namespace) -> int:
         print(block)
         return 1
     text = rc.read_text(encoding="utf-8")
-    if "# >>> deepseek-chan >>>" in text:
-        print("deepseek-chan hotkeys already installed")
+    if "# >>> mochi >>>" in text:
+        print("mochi hotkeys already installed")
         return 0
     rc.write_text(text + block, encoding="utf-8")
     print(f"installed hotkeys in {rc}")
@@ -117,8 +117,8 @@ def cmd_install_hotkey(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="deepseek-chan", description="DeepSeek-chan desktop pet")
-    parser.add_argument("--version", action="version", version=f"deepseek-chan {__version__}")
+    parser = argparse.ArgumentParser(prog="mochi", description="Mochi desktop pet")
+    parser.add_argument("--version", action="version", version=f"mochi {__version__}")
     sub = parser.add_subparsers(dest="command")
 
     run = sub.add_parser("run", help="run the overlay (default)")

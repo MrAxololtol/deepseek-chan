@@ -8,11 +8,11 @@ import { posix } from 'node:path'
 import test from 'node:test'
 import { createContext, SourceTextModule, SyntheticModule } from 'node:vm'
 
-const source = readFileSync(new URL('../src/deepseek_chan/plugin/deepseek-pet.js', import.meta.url), 'utf8')
+const source = readFileSync(new URL('../src/mochi/plugin/mochi-pet.js', import.meta.url), 'utf8')
 
 async function harness({
   platform = 'linux', env = { XDG_CACHE_HOME: '/virtual/cache' },
-  expectedCache = '/virtual/cache/deepseek-chan',
+  expectedCache = '/virtual/cache/mochi',
 } = {}) {
   const records = []
   let now = 10000
@@ -50,7 +50,7 @@ async function harness({
     }, { context })
   })
   await module.evaluate()
-  const hooks = await module.namespace.DeepSeekChanPlugin()
+  const hooks = await module.namespace.MochiPlugin()
   assert.deepEqual(records.map(r => r.kind), ['activity'])
   records.length = 0
   return { hooks, records, advance: ms => { now += ms } }
@@ -115,9 +115,9 @@ test('test result fallbacks and missing error details are supported', async () =
 })
 
 for (const [platform, env, expectedCache] of [
-  ['win32', { LOCALAPPDATA: '/virtual/local' }, '/virtual/local/deepseek-chan/deepseek-chan/Cache'],
-  ['darwin', {}, '/virtual/home/Library/Caches/deepseek-chan'],
-  ['linux', {}, '/virtual/home/.cache/deepseek-chan'],
+  ['win32', { LOCALAPPDATA: '/virtual/local' }, '/virtual/local/mochi/mochi/Cache'],
+  ['darwin', {}, '/virtual/home/Library/Caches/mochi'],
+  ['linux', {}, '/virtual/home/.cache/mochi'],
 ]) {
   test(`cache location matches platformdirs convention on ${platform}`, async () => {
     const { hooks, records } = await harness({ platform, env, expectedCache })

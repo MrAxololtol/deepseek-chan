@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# DeepSeek-chan installer (development / clone install).
+# Mochi installer (development / clone install).
 #
 #   ./scripts/install.sh            install the package + opencode plugin
 #   ./scripts/install.sh --no-plugin
@@ -12,7 +12,7 @@ for arg in "$@"; do
   [[ "$arg" == "--no-plugin" ]] && install_plugin=0
 done
 
-echo "==> Installing deepseek-chan from $here"
+echo "==> Installing mochi from $here"
 if command -v pipx >/dev/null 2>&1; then
   pipx install --force "$here"
 else
@@ -21,13 +21,13 @@ fi
 
 if [[ "$install_plugin" == "1" ]]; then
   echo "==> Installing opencode plugin"
-  if command -v deepseek-chan >/dev/null 2>&1; then
-    deepseek-chan install-plugin
+  if command -v mochi >/dev/null 2>&1; then
+    mochi install-plugin
   else
-    python3 -m deepseek_chan install-plugin
+    python3 -m mochi install-plugin
   fi
 fi
 
 echo
-echo "Done. Restart opencode, then run:  deepseek-chan run"
-echo "Try it now with:                   deepseek-chan --demo"
+echo "Done. Restart opencode, then run:  mochi run"
+echo "Try it now with:                   mochi --demo"

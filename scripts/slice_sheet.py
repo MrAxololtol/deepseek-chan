@@ -11,10 +11,10 @@ from PyQt6.QtGui import QImage
 
 # Support direct use from a source checkout before editable installation.
 _SOURCE = Path(__file__).resolve().parents[1] / "src"
-if (_SOURCE / "deepseek_chan" / "manifest.py").is_file():
+if (_SOURCE / "mochi" / "manifest.py").is_file():
     sys.path.insert(0, str(_SOURCE))
 
-from deepseek_chan.manifest import SPRITE_NAMES  # noqa: E402
+from mochi.manifest import SPRITE_NAMES  # noqa: E402
 
 MANIFEST = SPRITE_NAMES
 

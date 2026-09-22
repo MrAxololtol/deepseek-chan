@@ -81,7 +81,7 @@ class AskBox(QFrame):
         layout = QVBoxLayout(panel)
         layout.setContentsMargins(14, 12, 14, 12)
         layout.setSpacing(6)
-        title = QLabel("Ask DeepSeek-chan")
+        title = QLabel("Ask Mochi")
         title.setObjectName("title")
         self.edit = QLineEdit()
         self.edit.setObjectName("edit")

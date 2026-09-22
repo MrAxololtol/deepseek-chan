@@ -1,6 +1,6 @@
 import json
 
-from deepseek_chan import cli, doctor
+from mochi import cli, doctor
 
 
 def test_doctor_subcommand_json_and_exit_status(monkeypatch, capsys):

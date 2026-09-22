@@ -1,4 +1,4 @@
-# DeepSeek-chan
+# Mochi
 
 **A little company for your next big think.**
 
@@ -9,12 +9,12 @@ An anime-girl desktop pet that reacts to your opencode TUI sessions, built with 
 > `opencode run "<your question>"` for you. Desktop pet for the fun; a
 > one-keystroke agent prompt box for the actual work.
 
-![DeepSeek-chan desktop demo](docs/demo.gif)
+![Mochi desktop demo](docs/demo.gif)
 
 ## Features
 
 - **Ask opencode anything** from a little input box over the pet
-  (Super+Alt-click, or `deepseek-chan ask`) — Enter runs `opencode run`.
+  (Super+Alt-click, or `mochi ask`) — Enter runs `opencode run`.
 - Reactions for thinking, deep thinking, tool work, completion, and errors.
 - Grab her by the scruff: she dangles, and a fast drag flings her with real
   spring-damped momentum before she swings back to centre.
@@ -38,34 +38,34 @@ From a checkout of this repository, with Python 3.9+ and pipx installed:
 
 ```sh
 pipx install .
-deepseek-chan install-plugin
-deepseek-chan run
+mochi install-plugin
+mochi run
 ```
 
-Restart opencode after installing the plugin. Use `deepseek-chan install-plugin --project`
+Restart opencode after installing the plugin. Use `mochi install-plugin --project`
 for installation into the current project's `.opencode/plugins/` directory.
 A graphical desktop is needed for the pet; window placement, transparency, and
 input behavior depend on your window manager and compositor.
 
 ```sh
-deepseek-chan run --demo
-deepseek-chan run --pat
-deepseek-chan run --summon
-deepseek-chan outfit hoodie_up
-deepseek-chan ask
-deepseek-chan theme              # re-read the desktop accent
-deepseek-chan theme '#b03060'    # or pin a specific accent
+mochi run --demo
+mochi run --pat
+mochi run --summon
+mochi outfit hoodie_up
+mochi ask
+mochi theme              # re-read the desktop accent
+mochi theme '#b03060'    # or pin a specific accent
 ```
 
-`deepseek-chan install-hotkey` adds an sxhkd summon binding (`Super+p`) and the
+`mochi install-hotkey` adds an sxhkd summon binding (`Super+p`) and the
 ask binding (`Super+Alt+left-click`) that shows the input box only while the
 pointer is over the pet.
 
 ## Configuration
 
-Run `deepseek-chan config` to create the example configuration and
-`deepseek-chan paths` to locate it. Or save this as `my-pet.toml` and launch
-`deepseek-chan run --config my-pet.toml`:
+Run `mochi config` to create the example configuration and
+`mochi paths` to locate it. Or save this as `my-pet.toml` and launch
+`mochi run --config my-pet.toml`:
 
 ```toml
 scale = 0.9
@@ -126,7 +126,7 @@ Every change is recorded in the [changelog](CHANGELOG.md).
 Everything is local. The opencode bridge reads session **event types**, tool
 **names**, and — only for test/build-like commands — the tool **output**, purely
 to classify pass/fail. It writes `kind`, `detail` and a timestamp to
-`~/.cache/deepseek-chan/events.ndjson` (plus the latest event to `state.json`),
+`~/.cache/mochi/events.ndjson` (plus the latest event to `state.json`),
 and writes `pet.pid`. No message text, prompts or file contents are stored, and
 nothing is sent anywhere.
 
@@ -141,10 +141,10 @@ which shows up as a hazy silhouette. Exclude the pet's window class from those
 effects, for example:
 
 ```conf
-blur-background-exclude = [ "class_g = 'deepseek-chan'" ];
-shadow-exclude         = [ "class_g = 'deepseek-chan'" ];
-fade-exclude           = [ "class_g = 'deepseek-chan'" ];
-rounded-corners-exclude = [ "class_g = 'deepseek-chan'" ];
+blur-background-exclude = [ "class_g = 'mochi'" ];
+shadow-exclude         = [ "class_g = 'mochi'" ];
+fade-exclude           = [ "class_g = 'mochi'" ];
+rounded-corners-exclude = [ "class_g = 'mochi'" ];
 ```
 
 On bspwm the pet floats, stays on the above layer, spans every desktop (sticky)
@@ -158,14 +158,14 @@ Project source and contributed tooling are MIT-licensed; see [LICENSE](LICENSE).
 Dependencies retain their own licenses. Only contribute artwork you own or have
 permission to redistribute with documented licensing. No reference video is included.
 
-DeepSeek-chan is an **unofficial fan project**, not affiliated with, endorsed by,
+Mochi is an **unofficial fan project**, not affiliated with, endorsed by,
 or sponsored by DeepSeek. Names and marks belong to their respective owners.
 
 ## Diagnostics and alternate palettes
 
 ```sh
-deepseek-chan doctor
-deepseek-chan doctor --json
+mochi doctor
+mochi doctor --json
 ```
 
 The doctor checks Qt imports, the window-mask API, SVG layers or PNG poses, the plugin
@@ -179,7 +179,7 @@ Three palette presets are included: `aurora`, `lavender`, and `ember`. From a
 checkout, try one with:
 
 ```sh
-deepseek-chan run --config src/deepseek_chan/themes/aurora.toml
+mochi run --config src/mochi/themes/aurora.toml
 ```
 
 Alternatively copy a preset's `[palette]` table into your user configuration.

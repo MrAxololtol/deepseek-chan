@@ -23,10 +23,10 @@ from PyQt6.QtCore import QPointF  # noqa: E402
 from PyQt6.QtGui import QColor, QLinearGradient, QPainter, QPixmap  # noqa: E402
 from PyQt6.QtWidgets import QApplication  # noqa: E402
 
-from deepseek_chan.config import Config  # noqa: E402
-from deepseek_chan.raster import create_renderer  # noqa: E402
-from deepseek_chan.renderer import WINDOW_H, WINDOW_W  # noqa: E402
-from deepseek_chan.state import State, Status  # noqa: E402
+from mochi.config import Config  # noqa: E402
+from mochi.raster import create_renderer  # noqa: E402
+from mochi.renderer import WINDOW_H, WINDOW_W  # noqa: E402
+from mochi.state import State, Status  # noqa: E402
 
 DOCS = ROOT / "docs"
 FRAMES = DOCS / "_frames"

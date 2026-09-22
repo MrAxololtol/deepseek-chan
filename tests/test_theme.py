@@ -2,7 +2,7 @@
 
 from PyQt6.QtGui import QColor, QImage
 
-from deepseek_chan import config, theme
+from mochi import config, theme
 
 
 def test_read_accent_prefers_blue(tmp_path):

@@ -18,7 +18,7 @@ env/
 .DS_Store
 Thumbs.db
 
-# DeepSeek-chan runtime
+# Mochi runtime
 *.log
 
 # Private reference recordings (never commit third-party capture material)

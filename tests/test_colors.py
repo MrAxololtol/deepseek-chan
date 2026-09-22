@@ -1,7 +1,7 @@
 import pytest
 
-from deepseek_chan.colors import palette_color
-from deepseek_chan.config import Palette
+from mochi.colors import palette_color
+from mochi.config import Palette
 
 
 def test_default_bubble_color_has_expected_alpha():

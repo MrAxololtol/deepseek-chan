@@ -1,7 +1,7 @@
 """Building the ask-box command."""
 
-from deepseek_chan.ask import build_command
-from deepseek_chan.config import Config
+from mochi.ask import build_command
+from mochi.config import Config
 
 
 def test_template_placeholder_replaced():

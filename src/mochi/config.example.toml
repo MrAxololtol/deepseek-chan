@@ -1,6 +1,6 @@
-# DeepSeek-chan configuration
-# Copy to:  <user config dir>/deepseek-chan/config.toml
-# or run:   deepseek-chan config
+# Mochi configuration
+# Copy to:  <user config dir>/mochi/config.toml
+# or run:   mochi config
 #
 # Every value here is optional; anything omitted uses the built-in default.
 
@@ -16,7 +16,7 @@ theme_accent_file = "~/.config/polybar/colors.ini"   # where colorChange writes 
 # theme_color = "#b03060"         # pin an accent instead of following the theme
 # theme_base_hue = 227.0          # hue of the sprite's base blue (advanced)
 outfit = "hoodie"                 # hoodie | hoodie_up
-# sprite_pack = "~/my-deepseek-chan-skins"
+# sprite_pack = "~/my-mochi-skins"
 summon_hotkey = "super + p"
 ask_hotkey = "super + alt + button1"   # Super+Alt click her to ask opencode
 # How the ask box sends your message. "{prompt}" is replaced with what you

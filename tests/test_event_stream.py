@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from deepseek_chan.event_stream import EventDecoder, parse_record
+from mochi.event_stream import EventDecoder, parse_record
 
 
 def test_split_multibyte_utf8_record_is_preserved():

@@ -1,4 +1,4 @@
-"""Pure, display-free state machine for DeepSeek-chan.
+"""Pure, display-free state machine for Mochi.
 
 Everything in this module is plain Python (no Qt), so it is easy to reason
 about and to unit test.  The renderer asks :class:`PetBrain` for a

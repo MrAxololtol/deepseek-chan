@@ -1,7 +1,7 @@
 """Scruff-grab spring physics."""
 
-from deepseek_chan.anim import Spring
-from deepseek_chan.config import Config
+from mochi.anim import Spring
+from mochi.config import Config
 
 
 def test_spring_flings_past_centre_and_settles():

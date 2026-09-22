@@ -1,4 +1,4 @@
-"""Turns a :class:`~deepseek_chan.state.Status` into a composited pixmap.
+"""Turns a :class:`~mochi.state.Status` into a composited pixmap.
 
 The character is authored on a 320x400 grid.  We render the window a little
 taller (and wider) so the speech bubble and the status pill have room without

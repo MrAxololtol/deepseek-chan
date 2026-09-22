@@ -5,9 +5,9 @@ from types import SimpleNamespace
 import pytest
 from PyQt6.QtCore import Qt
 
-from deepseek_chan import config
-from deepseek_chan.config import Config
-from deepseek_chan.window import PetWindow
+from mochi import config
+from mochi.config import Config
+from mochi.window import PetWindow
 
 
 @pytest.fixture

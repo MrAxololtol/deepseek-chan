@@ -2,7 +2,7 @@
 
 Every bundled asset is authored with ``{{token}}`` colour placeholders (for
 example ``{{hair}}``).  At load time we swap those for the values in the
-active :class:`~deepseek_chan.config.Palette`, render the SVG to a transparent
+active :class:`~mochi.config.Palette`, render the SVG to a transparent
 pixmap and cache the result, so a user can re-theme the whole character from
 ``config.toml`` without touching the art.
 """

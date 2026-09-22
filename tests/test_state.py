@@ -1,7 +1,7 @@
 """Deterministic public-API tests: no clocks, sleeps, or Qt application."""
 import pytest
 
-from deepseek_chan.state import PetBrain, State
+from mochi.state import PetBrain, State
 
 
 def test_thinking_threshold_and_heartbeat():

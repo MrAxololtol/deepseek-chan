@@ -3,10 +3,10 @@ from pathlib import Path
 import pytest
 from PyQt6.QtGui import QColor, QImage
 
-from deepseek_chan.config import Config
-from deepseek_chan.raster import RasterPack, RasterRenderer, candidates, create_renderer
-from deepseek_chan.renderer import Renderer
-from deepseek_chan.state import State, Status
+from mochi.config import Config
+from mochi.raster import RasterPack, RasterRenderer, candidates, create_renderer
+from mochi.renderer import Renderer
+from mochi.state import State, Status
 
 
 def write_sprite(directory, name, color="blue", size=(20, 40)):
@@ -92,7 +92,7 @@ def test_bundled_adult_png_is_default(qapp):
 
 
 def test_svg_fallback_when_pack_missing(qapp):
-    renderer = create_renderer(Config(sprite_pack="/nonexistent/deepseek-chan-pack"))
+    renderer = create_renderer(Config(sprite_pack="/nonexistent/mochi-pack"))
     assert type(renderer) is Renderer
     assert Path(renderer.bank.dir).name == "assets"
 
@@ -112,7 +112,7 @@ def test_oversized_optional_image_is_rejected(pack_dir):
 
 
 def test_doctor_accepts_minimal_raster_pack(pack_dir):
-    from deepseek_chan.doctor import _assets_check
+    from mochi.doctor import _assets_check
 
     detail, ok = _assets_check(pack_dir)
     assert ok
@@ -121,8 +121,8 @@ def test_doctor_accepts_minimal_raster_pack(pack_dir):
 
 
 def test_window_uses_raster_renderer(pack_dir, qapp, monkeypatch):
-    from deepseek_chan import config
-    from deepseek_chan.window import PetWindow
+    from mochi import config
+    from mochi.window import PetWindow
 
     monkeypatch.setattr(config, "cache_dir", lambda: pack_dir)
     monkeypatch.setattr(PetWindow, "_place_initial", lambda self: None)

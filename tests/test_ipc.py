@@ -1,7 +1,7 @@
 import json
 
-from deepseek_chan import config
-from deepseek_chan.ipc import EventTail, emit
+from mochi import config
+from mochi.ipc import EventTail, emit
 
 
 def make_tail(tmp_path, monkeypatch):

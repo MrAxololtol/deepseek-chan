@@ -1,10 +1,10 @@
 /**
- * DeepSeek-chan — opencode plugin bridge.
+ * Mochi — opencode plugin bridge.
  *
  * Translates opencode events into a line-oriented event log that the Python
  * overlay tails, and makes sure the overlay is running.
  *
- * Install with:  deepseek-chan install-plugin
+ * Install with:  mochi install-plugin
  * or drop this file in  ~/.config/opencode/plugins/
  */
 
@@ -45,13 +45,13 @@ function classify(cmd, out) {
 function cacheDir() {
   if (process.platform === "win32") {
     const base = process.env.LOCALAPPDATA || join(homedir(), "AppData", "Local")
-    return join(base, "deepseek-chan", "deepseek-chan", "Cache")
+    return join(base, "mochi", "mochi", "Cache")
   }
   if (process.platform === "darwin") {
-    return join(homedir(), "Library", "Caches", "deepseek-chan")
+    return join(homedir(), "Library", "Caches", "mochi")
   }
   const base = process.env.XDG_CACHE_HOME || join(homedir(), ".cache")
-  return join(base, "deepseek-chan")
+  return join(base, "mochi")
 }
 
 const DIR = cacheDir()
@@ -92,9 +92,9 @@ async function ensureRunning() {
     /* no pid file yet */
   }
   const attempts = [
-    ["deepseek-chan", ["run"]],
-    ["python3", ["-m", "deepseek_chan"]],
-    ["python", ["-m", "deepseek_chan"]],
+    ["mochi", ["run"]],
+    ["python3", ["-m", "mochi"]],
+    ["python", ["-m", "mochi"]],
   ]
   starting = (async () => {
     for (const [cmd, args] of attempts) {
@@ -132,7 +132,7 @@ function think() {
   emit("thinking")
 }
 
-export const DeepSeekChanPlugin = async () => {
+export const MochiPlugin = async () => {
   await ensureRunning()
   emit("activity")
 
@@ -182,4 +182,4 @@ export const DeepSeekChanPlugin = async () => {
   }
 }
 
-export default DeepSeekChanPlugin
+export default MochiPlugin

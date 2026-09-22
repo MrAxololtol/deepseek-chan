@@ -1,4 +1,4 @@
-"""Conservative, headless-safe diagnostics; run ``python -m deepseek_chan.doctor``.
+"""Conservative, headless-safe diagnostics; run ``python -m mochi.doctor``.
 
 A false result can mean unverified, not necessarily broken. No QApplication is
 created: selecting a broken desktop backend can otherwise abort the interpreter.
@@ -93,10 +93,10 @@ def _plugin_check(project_dir: Path, plugin_dir: Optional[Path]) -> tuple[str, b
     ]
     problems = []
     for directory in directories:
-        path = directory / "deepseek-pet.js"
+        path = directory / "mochi-pet.js"
         try:
             contents = path.read_text(encoding="utf-8")
-            if "DeepSeekChanPlugin" in contents and "tool.execute.before" in contents:
+            if "MochiPlugin" in contents and "tool.execute.before" in contents:
                 return f"{path}: bridge present (restart opencode to load)", True
             problems.append(f"{path}: missing expected bridge hooks")
         except (OSError, UnicodeError) as exc:
@@ -107,7 +107,7 @@ def _plugin_check(project_dir: Path, plugin_dir: Optional[Path]) -> tuple[str, b
 def _cache_check(directory: Path) -> tuple[str, bool]:
     try:
         directory.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryFile(prefix="deepseek-chan-doctor-", dir=directory) as probe:
+        with tempfile.TemporaryFile(prefix="mochi-doctor-", dir=directory) as probe:
             probe.write(b"write probe")
             probe.flush()
         return f"{directory}: temporary write succeeded", True
@@ -129,7 +129,7 @@ def diagnose(
     bundled = Path(__file__).with_name("assets")
     default_assets = bundled / "adult" if (bundled / "adult" / "idle.png").is_file() else bundled
     assets = Path(asset_dir) if asset_dir is not None else default_assets
-    cache = Path(cache_dir) if cache_dir is not None else Path(user_cache_dir("deepseek-chan"))
+    cache = Path(cache_dir) if cache_dir is not None else Path(user_cache_dir("mochi"))
     project = Path(project_dir) if project_dir is not None else Path.cwd()
     plugin = Path(plugin_dir) if plugin_dir is not None else None
     return [

@@ -38,7 +38,7 @@ def run(
         return 0
 
     app = QApplication.instance() or QApplication(sys.argv)
-    app.setApplicationName("deepseek-chan")
+    app.setApplicationName("mochi")
     app.setQuitOnLastWindowClosed(True)
 
     cfg: Config = load(config_path)

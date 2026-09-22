@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from deepseek_chan import config
+from mochi import config
 
 
 @pytest.mark.parametrize("name", ["aurora", "lavender", "ember"])

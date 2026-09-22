@@ -35,7 +35,9 @@ Selection priority:
 - While dragging: `held`, then the normal state candidates.
 - Hood up: `hoodie_up_idle`, `hoodie_up_thinking`, or `hoodie_up_sleep` for those
   states, before falling back to the equivalent ordinary pose.
-- Hood down: `blink` while listening, thinking, or working when the blink timer fires.
+- Hood down: `blink` while listening when the blink timer fires. Because a raster
+  blink is a whole idle pose, it is not swapped into other states (that would
+  visibly change her pose mid-thought).
 - Idle mood: `idle_smile` or `idle_sleepy`, then `idle`.
 - Other states: matching name; `thinking_hard` also falls back to `thinking`.
 - Finally: `idle`.

@@ -35,7 +35,10 @@ def test_variant_priority():
     assert candidates(State.LISTENING, outfit="hoodie_up", blinking=True)[0] == "hoodie_up_idle"
     assert candidates(State.LISTENING, mood=0.9)[0] == "idle_smile"
     assert candidates(State.LISTENING, mood=0.1)[0] == "idle_sleepy"
-    assert candidates(State.WORKING, blinking=True)[0] == "blink"
+    assert candidates(State.LISTENING, blinking=True)[0] == "blink"
+    # blink is a full idle pose, so it must not replace other poses
+    assert candidates(State.THINKING, blinking=True)[0] == "thinking"
+    assert candidates(State.WORKING, blinking=True)[0] == "working"
     assert candidates(State.ERROR, held=True)[0] == "held"
 
 

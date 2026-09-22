@@ -39,7 +39,9 @@ def candidates(
             names.append("hoodie_up_sleep")
         elif state == State.LISTENING:
             names.append("hoodie_up_idle")
-    elif blinking and state in (State.LISTENING, State.THINKING, State.WORKING):
+    elif blinking and state == State.LISTENING:
+        # A raster "blink" is a whole-pose image, so only swap it where the pose
+        # matches idle; otherwise blinking would visibly change her pose.
         names.append("blink")
     if state == State.LISTENING:
         if mood >= 0.72:

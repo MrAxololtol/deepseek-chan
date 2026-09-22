@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <defs>
+    <clipPath id="eyeL"><path d="M106 142 Q118 108 130 110 Q146 112 154 142 Q140 172 130 170 Q116 170 106 142 Z"/></clipPath>
+    <clipPath id="eyeR"><path d="M214 142 Q202 108 190 110 Q174 112 166 142 Q180 172 190 170 Q204 170 214 142 Z"/></clipPath>
+    <radialGradient id="iris" cx="45%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="{{hair_shine}}"/>
+      <stop offset="55%" stop-color="{{iris}}"/>
+      <stop offset="100%" stop-color="{{hair_shadow}}"/>
+    </radialGradient>
+  </defs>
+  <path d="M106 142 Q118 108 130 110 Q146 112 154 142 Q140 172 130 170 Q116 170 106 142 Z" fill="#FFFFFF"/>
+  <path d="M214 142 Q202 108 190 110 Q174 112 166 142 Q180 172 190 170 Q204 170 214 142 Z" fill="#FFFFFF"/>
+  <g clip-path="url(#eyeL)">
+    <circle cx="129" cy="146" r="17" fill="url(#iris)"/>
+    <circle cx="129" cy="148" r="7" fill="{{pupil}}"/>
+    <rect x="104" y="118" width="54" height="18" fill="{{hair_shadow}}" opacity="0.4"/>
+  </g>
+  <g clip-path="url(#eyeR)">
+    <circle cx="191" cy="146" r="17" fill="url(#iris)"/>
+    <circle cx="191" cy="148" r="7" fill="{{pupil}}"/>
+    <rect x="164" y="118" width="54" height="18" fill="{{hair_shadow}}" opacity="0.4"/>
+  </g>
+  <path d="M106 122 Q122 138 140 128" fill="none" stroke="{{outline}}" stroke-width="6" stroke-linecap="round"/>
+  <path d="M214 122 Q198 138 180 128" fill="none" stroke="{{outline}}" stroke-width="6" stroke-linecap="round"/>
+  <path d="M104 120 Q118 138 138 132" fill="none" stroke="{{outline}}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M216 120 Q202 138 182 132" fill="none" stroke="{{outline}}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M112 116 Q120 108 132 110" fill="none" stroke="{{outline}}" stroke-width="4" stroke-linecap="round"/>
+  <path d="M208 116 Q200 108 188 110" fill="none" stroke="{{outline}}" stroke-width="4" stroke-linecap="round"/>
+  <path d="M150 186 q4 -5 8 0 q4 5 8 0" fill="none" stroke="{{outline}}" stroke-width="3" stroke-linecap="round"/>
+  <path d="M224 104 C 218 114 218 120 224 122 C 230 120 230 114 224 104 Z" fill="{{hoodie_trim}}" opacity="0.85"/>
+  <ellipse cx="104" cy="168" rx="16" ry="8" fill="{{skin_shadow}}" opacity="0.55"/>
+  <ellipse cx="216" cy="168" rx="16" ry="8" fill="{{skin_shadow}}" opacity="0.55"/>
+</svg>

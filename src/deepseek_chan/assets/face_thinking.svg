@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <defs>
+    <clipPath id="eyeL"><path d="M106 142 Q118 108 130 110 Q146 112 154 142 Q140 172 130 170 Q116 170 106 142 Z"/></clipPath>
+    <clipPath id="eyeR"><path d="M214 142 Q202 108 190 110 Q174 112 166 142 Q180 172 190 170 Q204 170 214 142 Z"/></clipPath>
+    <radialGradient id="iris" cx="45%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="{{hair_shine}}"/>
+      <stop offset="55%" stop-color="{{iris}}"/>
+      <stop offset="100%" stop-color="{{hair_shadow}}"/>
+    </radialGradient>
+  </defs>
+  <path d="M106 142 Q118 108 130 110 Q146 112 154 142 Q140 172 130 170 Q116 170 106 142 Z" fill="#FFFFFF"/>
+  <path d="M214 142 Q202 108 190 110 Q174 112 166 142 Q180 172 190 170 Q204 170 214 142 Z" fill="#FFFFFF"/>
+  <g clip-path="url(#eyeL)">
+    <circle cx="124" cy="138" r="19" fill="url(#iris)"/>
+    <circle cx="124" cy="140" r="7.5" fill="{{pupil}}"/>
+    <circle cx="117" cy="130" r="5.5" fill="#FFFFFF"/>
+    <rect x="104" y="102" width="54" height="15" fill="{{hair_shadow}}" opacity="0.32"/>
+  </g>
+  <g clip-path="url(#eyeR)">
+    <circle cx="184" cy="138" r="19" fill="url(#iris)"/>
+    <circle cx="184" cy="140" r="7.5" fill="{{pupil}}"/>
+    <circle cx="177" cy="130" r="5.5" fill="#FFFFFF"/>
+    <rect x="164" y="102" width="54" height="15" fill="{{hair_shadow}}" opacity="0.32"/>
+  </g>
+  <path d="M105 138 Q122 104 134 108 Q148 112 155 136" fill="none" stroke="{{outline}}" stroke-width="6" stroke-linecap="round"/>
+  <path d="M215 138 Q198 104 186 108 Q172 112 165 136" fill="none" stroke="{{outline}}" stroke-width="6" stroke-linecap="round"/>
+  <path d="M159 170 l3 3 l-5 1" fill="{{skin_shadow}}" opacity="0.8"/>
+  <ellipse cx="160" cy="187" rx="6" ry="7" fill="{{outline}}" opacity="0.85"/>
+  <ellipse cx="104" cy="166" rx="13" ry="6" fill="{{skin_shadow}}" opacity="0.45"/>
+  <ellipse cx="216" cy="166" rx="13" ry="6" fill="{{skin_shadow}}" opacity="0.45"/>
+</svg>

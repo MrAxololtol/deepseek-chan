@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <defs>
+    <clipPath id="eyeL"><path d="M106 142 Q118 108 130 110 Q146 112 154 142 Q140 172 130 170 Q116 170 106 142 Z"/></clipPath>
+    <clipPath id="eyeR"><path d="M214 142 Q202 108 190 110 Q174 112 166 142 Q180 172 190 170 Q204 170 214 142 Z"/></clipPath>
+    <radialGradient id="iris" cx="45%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="{{hair_shine}}"/>
+      <stop offset="55%" stop-color="{{iris}}"/>
+      <stop offset="100%" stop-color="{{hair_shadow}}"/>
+    </radialGradient>
+  </defs>
+  <path d="M106 142 Q118 108 130 110 Q146 112 154 142 Q140 172 130 170 Q116 170 106 142 Z" fill="#FFFFFF"/>
+  <path d="M214 142 Q202 108 190 110 Q174 112 166 142 Q180 172 190 170 Q204 170 214 142 Z" fill="#FFFFFF"/>
+  <g clip-path="url(#eyeL)">
+    <circle cx="130" cy="146" r="19" fill="url(#iris)"/>
+    <circle cx="130" cy="148" r="7.5" fill="{{pupil}}"/>
+    <circle cx="123" cy="138" r="5" fill="#FFFFFF"/>
+    <rect x="104" y="102" width="54" height="24" fill="{{skin}}" opacity="0.96"/>
+    <path d="M104 126 Q130 134 158 126" fill="none" stroke="{{outline}}" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <g clip-path="url(#eyeR)">
+    <circle cx="190" cy="146" r="19" fill="url(#iris)"/>
+    <circle cx="190" cy="148" r="7.5" fill="{{pupil}}"/>
+    <circle cx="183" cy="138" r="5" fill="#FFFFFF"/>
+    <rect x="164" y="102" width="54" height="24" fill="{{skin}}" opacity="0.96"/>
+    <path d="M164 126 Q190 134 218 126" fill="none" stroke="{{outline}}" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <path d="M105 138 Q120 104 132 108 Q147 111 155 136" fill="none" stroke="{{outline}}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M215 138 Q200 104 188 108 Q173 111 165 136" fill="none" stroke="{{outline}}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M159 170 l3 3 l-5 1" fill="{{skin_shadow}}" opacity="0.8"/>
+  <path d="M154 184 Q160 180 166 184" fill="none" stroke="{{outline}}" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="104" cy="166" rx="13" ry="6" fill="{{skin_shadow}}" opacity="0.45"/>
+  <ellipse cx="216" cy="166" rx="13" ry="6" fill="{{skin_shadow}}" opacity="0.45"/>
+</svg>

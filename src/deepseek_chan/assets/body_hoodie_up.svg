@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <!-- ===== twin tails (behind) ===== -->
+  <g>
+    <path d="M104 132 C 58 156 40 210 48 262 C 54 304 66 338 78 360 C 74 320 78 282 92 250 C 102 226 106 196 106 164 Z" fill="{{hair_shadow}}"/>
+    <path d="M216 132 C 262 156 280 210 272 262 C 266 304 254 338 242 360 C 246 320 242 282 228 250 C 218 226 214 196 214 164 Z" fill="{{hair_shadow}}"/>
+    <path d="M112 150 C 82 176 72 220 80 262 C 84 292 92 320 100 344 C 98 312 100 280 110 254 C 118 232 120 200 118 172 Z" fill="{{hair}}"/>
+    <path d="M208 150 C 238 176 248 220 240 262 C 236 292 228 320 220 344 C 222 312 220 280 210 254 C 202 232 200 200 202 172 Z" fill="{{hair}}"/>
+  </g>
+
+  <!-- ===== whale-fin hood ears ===== -->
+  <path d="M112 58 C 88 26 58 14 40 22 C 64 30 80 50 92 74 Z" fill="{{hoodie_trim}}"/>
+  <path d="M208 58 C 232 26 262 14 280 22 C 256 30 240 50 228 74 Z" fill="{{hoodie_trim}}"/>
+
+  <!-- ===== hood mass (behind head) ===== -->
+  <path d="M160 30 C 92 30 54 80 56 142 C 58 190 80 224 104 236 C 94 196 96 152 112 120 C 126 90 160 76 160 76 C 160 76 194 90 208 120 C 224 152 226 196 216 236 C 240 224 262 190 264 142 C 266 80 228 30 160 30 Z" fill="{{hoodie}}"/>
+  <path d="M160 46 C 104 46 74 88 76 138 C 78 174 92 202 108 216 C 100 182 104 146 118 120 C 132 92 160 82 160 82 C 160 82 188 92 202 120 C 216 146 220 182 212 216 C 228 202 242 174 244 138 C 246 88 216 46 160 46 Z" fill="{{hoodie_trim}}" opacity="0.18"/>
+
+  <!-- ===== back hair cap ===== -->
+  <ellipse cx="160" cy="126" rx="76" ry="84" fill="{{hair_shadow}}"/>
+
+  <!-- ===== legs / thigh-highs / shoes ===== -->
+  <g>
+    <rect x="128" y="330" width="26" height="58" rx="10" fill="{{thigh}}"/>
+    <rect x="166" y="330" width="26" height="58" rx="10" fill="{{thigh}}"/>
+    <ellipse cx="140" cy="392" rx="21" ry="10" fill="{{outline}}"/>
+    <ellipse cx="180" cy="392" rx="21" ry="10" fill="{{outline}}"/>
+    <rect x="128" y="330" width="26" height="10" fill="{{hoodie_trim}}" opacity="0.35"/>
+    <rect x="166" y="330" width="26" height="10" fill="{{hoodie_trim}}" opacity="0.35"/>
+  </g>
+
+  <!-- ===== skirt ===== -->
+  <g>
+    <path d="M126 292 L194 292 L216 342 L104 342 Z" fill="{{skirt}}"/>
+    <path d="M140 292 L138 342 M160 292 L160 342 M180 292 L182 342" stroke="{{outline}}" stroke-width="1.5" opacity="0.5"/>
+    <rect x="124" y="288" width="72" height="9" rx="4" fill="{{outline}}" opacity="0.6"/>
+  </g>
+
+  <!-- ===== torso / hoodie ===== -->
+  <g>
+    <path d="M160 204 C 126 204 106 218 102 236 C 96 268 96 286 98 300 L 222 300 C 224 286 224 268 218 236 C 214 218 194 204 160 204 Z" fill="{{hoodie}}"/>
+    <path d="M110 226 C 104 200 126 188 160 188 C 194 188 216 200 210 226 C 196 210 180 203 160 203 C 140 203 124 210 110 226 Z" fill="{{hoodie_trim}}" opacity="0.22"/>
+    <path d="M132 210 C 144 224 176 224 188 210" fill="none" stroke="{{hoodie_trim}}" stroke-width="4" stroke-linecap="round"/>
+    <path d="M146 216 C 146 232 148 244 150 252 M174 216 C 174 232 172 244 170 252" fill="none" stroke="{{hoodie_trim}}" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="150" cy="254" r="3.5" fill="{{hoodie_trim}}"/>
+    <circle cx="170" cy="254" r="3.5" fill="{{hoodie_trim}}"/>
+    <g transform="translate(160 266)">
+      <ellipse cx="0" cy="0" rx="15" ry="10" fill="{{hoodie_trim}}"/>
+      <path d="M-15 0 L-28 -10 L-24 0 L-28 10 Z" fill="{{hoodie_trim}}"/>
+      <circle cx="7" cy="-3" r="2" fill="{{hoodie}}"/>
+      <path d="M-4 -10 C -4 -15 1 -17 4 -14" fill="none" stroke="{{hoodie_trim}}" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- ===== arms (mirrored) ===== -->
+  <g>
+    <path d="M106 226 C 88 236 78 266 80 296 C 82 306 98 308 102 298 C 104 272 110 250 122 238 Z" fill="{{hoodie}}"/>
+    <path d="M104 296 C 104 306 118 308 120 298 C 121 292 118 288 112 288 Z" fill="{{skin}}"/>
+  </g>
+  <g transform="translate(320,0) scale(-1,1)">
+    <path d="M106 226 C 88 236 78 266 80 296 C 82 306 98 308 102 298 C 104 272 110 250 122 238 Z" fill="{{hoodie}}"/>
+    <path d="M104 296 C 104 306 118 308 120 298 C 121 292 118 288 112 288 Z" fill="{{skin}}"/>
+  </g>
+
+  <!-- ===== neck ===== -->
+  <path d="M148 186 L172 186 L172 212 C 172 218 148 218 148 212 Z" fill="{{skin_shadow}}"/>
+
+  <!-- ===== head ===== -->
+  <ellipse cx="160" cy="130" rx="64" ry="70" fill="{{skin}}"/>
+</svg>

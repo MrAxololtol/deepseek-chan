@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <defs>
+    <clipPath id="eyeL"><path d="M106 142 Q118 108 130 110 Q146 112 154 142 Q140 172 130 170 Q116 170 106 142 Z"/></clipPath>
+    <clipPath id="eyeR"><path d="M214 142 Q202 108 190 110 Q174 112 166 142 Q180 172 190 170 Q204 170 214 142 Z"/></clipPath>
+  </defs>
+  <path d="M106 142 Q118 108 130 110 Q146 112 154 142 Q140 172 130 170 Q116 170 106 142 Z" fill="#FFFFFF"/>
+  <path d="M214 142 Q202 108 190 110 Q174 112 166 142 Q180 172 190 170 Q204 170 214 142 Z" fill="#FFFFFF"/>
+  <g clip-path="url(#eyeL)">
+    <circle cx="130" cy="144" r="22" fill="{{iris}}"/>
+    <circle cx="130" cy="145" r="6" fill="{{pupil}}"/>
+    <circle cx="123" cy="135" r="5" fill="#FFFFFF"/>
+  </g>
+  <g clip-path="url(#eyeR)">
+    <circle cx="190" cy="144" r="22" fill="{{iris}}"/>
+    <circle cx="190" cy="145" r="6" fill="{{pupil}}"/>
+    <circle cx="183" cy="135" r="5" fill="#FFFFFF"/>
+  </g>
+  <path d="M104 138 Q118 100 130 103 Q147 106 156 138" fill="none" stroke="{{outline}}" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M216 138 Q202 100 190 103 Q173 106 164 138" fill="none" stroke="{{outline}}" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M108 112 Q120 104 132 108" fill="none" stroke="{{outline}}" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M212 112 Q200 104 188 108" fill="none" stroke="{{outline}}" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M159 170 l3 3 l-5 1" fill="{{skin_shadow}}" opacity="0.8"/>
+  <ellipse cx="160" cy="188" rx="7" ry="9" fill="{{outline}}"/>
+  <ellipse cx="104" cy="166" rx="13" ry="6" fill="{{skin_shadow}}" opacity="0.5"/>
+  <ellipse cx="216" cy="166" rx="13" ry="6" fill="{{skin_shadow}}" opacity="0.5"/>
+</svg>

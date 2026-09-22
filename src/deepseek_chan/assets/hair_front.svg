@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <!-- ===== side locks framing face ===== -->
+  <path d="M100 108 C 88 128 86 160 90 196 C 96 214 108 224 118 226 C 108 200 104 168 106 140 C 107 122 104 112 100 108 Z" fill="{{hair}}"/>
+  <path d="M220 108 C 232 128 234 160 230 196 C 224 214 212 224 202 226 C 212 200 216 168 214 140 C 213 122 216 112 220 108 Z" fill="{{hair}}"/>
+
+  <!-- ===== bangs ===== -->
+  <path d="M160 56 C 112 56 84 92 82 138 C 96 118 104 112 116 106 C 112 124 116 138 124 146 C 126 126 132 112 142 104 C 146 122 152 132 160 138 C 168 132 174 122 178 104 C 188 112 194 126 196 146 C 204 138 208 124 204 106 C 216 112 224 118 238 138 C 236 92 208 56 160 56 Z" fill="{{hair}}"/>
+  <!-- bangs shine -->
+  <path d="M112 92 C 130 76 152 72 170 76" fill="none" stroke="{{hair_shine}}" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+  <path d="M188 84 C 202 92 212 104 218 118" fill="none" stroke="{{hair_shine}}" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- ===== whale hairclip ===== -->
+  <g transform="translate(112 106) rotate(-12)">
+    <ellipse cx="0" cy="0" rx="15" ry="10" fill="#FFFFFF"/>
+    <path d="M-15 0 L-27 -10 L-23 0 L-27 10 Z" fill="#FFFFFF"/>
+    <circle cx="8" cy="-3" r="2" fill="{{outline}}"/>
+    <circle cx="11" cy="-4" r="0.8" fill="#FFFFFF"/>
+    <path d="M-3 -10 C -3 -15 2 -17 5 -13" fill="none" stroke="{{hoodie_trim}}" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,57 @@
+# DeepSeek-chan configuration
+# Copy to:  <user config dir>/deepseek-chan/config.toml
+# or run:   deepseek-chan config
+#
+# Every value here is optional; anything omitted uses the built-in default.
+
+scale = 0.9
+always_on_top = true
+click_through = true
+start_position = "bottom-right"   # bottom-right | bottom-left | top-right | top-left
+remember_position = true
+hide_on_fullscreen = true
+outfit = "hoodie"                 # hoodie | hoodie_up
+# sprite_pack = "~/my-deepseek-chan-skins"
+
+[timing]
+sleep_after = 120.0               # seconds idle before she lies down
+hard_thinking_after = 600.0       # "thinking (longer)" after 10 minutes
+finished_bubble_for = 5.0
+stale_after = 300.0
+blink_min = 2.0
+blink_max = 6.0
+flip_min = 25.0                   # idle hair-flip interval
+flip_max = 45.0
+coffee_after = 8.0                # she pulls out coffee after this long working
+fps = 12
+
+# Re-theme the whole character from here. These feed the {{token}} placeholders
+# baked into every SVG asset.
+[palette]
+hair = "#4D6BFE"
+hair_shadow = "#2B3FB0"
+hair_shine = "#8FA8FF"
+skin = "#FFE6D5"
+skin_shadow = "#F5C9B0"
+iris = "#2FD4E8"
+pupil = "#0B1B3A"
+hoodie = "#17224A"
+hoodie_trim = "#4DE1FF"
+skirt = "#101830"
+thigh = "#0C1226"
+outline = "#1A2140"
+bubble_bg = "rgba(10,16,32,0.85)"
+bubble_border = "#4D6BFE"
+bubble_text = "#CDE8FF"
+zzz = "#9FB4FF"
+
+# Things she can say. One is chosen at random; leave a list empty to fall back
+# to the tool name / generic text.
+[quips]
+finished = ["Finished thinking", "All done!", "Nailed it~"]
+thinking = ["Thinking...", "Hmm...", "Processing..."]
+thinking_hard = ["Still thinking...", "This is a big one..."]
+error = ["Oh no...", "That broke!", "!?"]
+pat = ["ehehe~", "that tickles!", "pat pat~"]
+surprised = ["!?", "w-what!", "huh!?"]
+working = []

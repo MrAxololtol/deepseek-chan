@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <!-- hood rim, drawn over the hair when the hood is up -->
+  <path d="M92 84 C 120 60 200 60 228 84 C 240 96 244 112 244 128 C 232 104 200 90 160 90 C 120 90 88 104 76 128 C 76 112 80 96 92 84 Z" fill="{{hoodie}}"/>
+  <path d="M76 128 C 70 168 76 208 92 236 C 100 250 112 258 124 260 C 110 240 104 214 106 190 C 108 160 112 138 122 118 C 106 116 88 120 76 128 Z" fill="{{hoodie}}"/>
+  <path d="M244 128 C 250 168 244 208 228 236 C 220 250 208 258 196 260 C 210 240 216 214 214 190 C 212 160 208 138 198 118 C 214 116 232 120 244 128 Z" fill="{{hoodie}}"/>
+  <path d="M122 118 C 112 138 108 160 106 190 C 104 214 110 240 124 260" fill="none" stroke="{{hoodie_trim}}" stroke-width="3" opacity="0.7"/>
+  <path d="M198 118 C 208 138 212 160 214 190 C 216 214 210 240 196 260" fill="none" stroke="{{hoodie_trim}}" stroke-width="3" opacity="0.7"/>
+  <path d="M92 84 C 120 60 200 60 228 84" fill="none" stroke="{{hoodie_trim}}" stroke-width="3" opacity="0.7"/>
+</svg>

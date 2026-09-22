@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <path d="M14 24 H46 V44 C 46 50 41 55 35 55 H25 C 19 55 14 50 14 44 Z" fill="#FFFFFF" stroke="{{outline}}" stroke-width="3"/>
+  <path d="M46 28 H50 C 55 28 58 31 58 36 C 58 41 55 44 50 44 H46" fill="none" stroke="{{outline}}" stroke-width="3"/>
+  <path d="M20 18 C 20 12 26 12 26 6" fill="none" stroke="{{bubble_border}}" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <path d="M32 18 C 32 12 38 12 38 6" fill="none" stroke="{{bubble_border}}" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <rect x="14" y="24" width="32" height="7" fill="#6B4A2B" opacity="0.85"/>
+</svg>

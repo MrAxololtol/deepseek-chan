@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <!-- ground shadow -->
+  <ellipse cx="160" cy="366" rx="118" ry="16" fill="#000000" opacity="0.22"/>
+
+  <!-- splayed twin tails -->
+  <path d="M44 292 C 6 312 -6 348 12 374 C 26 392 52 390 68 376 C 44 374 30 356 38 334 C 42 320 48 306 60 296 Z" fill="{{hair_shadow}}"/>
+  <path d="M146 254 C 182 246 214 250 232 268 C 244 280 240 296 226 300 C 230 284 222 272 204 266 C 184 260 162 262 148 268 Z" fill="{{hair_shadow}}"/>
+
+  <!-- legs (bent, back) -->
+  <g>
+    <rect x="238" y="298" width="60" height="24" rx="12" transform="rotate(-14 268 310)" fill="{{thigh}}"/>
+    <rect x="252" y="326" width="52" height="22" rx="11" transform="rotate(8 278 337)" fill="{{thigh}}"/>
+    <ellipse cx="296" cy="300" rx="16" ry="10" transform="rotate(-14 296 300)" fill="{{outline}}"/>
+    <ellipse cx="300" cy="348" rx="15" ry="10" transform="rotate(8 300 348)" fill="{{outline}}"/>
+  </g>
+
+  <!-- body / hoodie curled -->
+  <path d="M118 268 C 158 254 226 254 266 270 C 284 278 288 318 272 332 C 224 348 160 348 120 336 C 102 330 100 280 118 268 Z" fill="{{hoodie}}"/>
+  <path d="M158 264 C 150 240 168 228 196 228 C 224 228 240 240 234 264 C 222 250 210 244 196 244 C 182 244 168 250 158 264 Z" fill="{{hoodie_trim}}" opacity="0.2"/>
+  <path d="M150 338 C 150 352 176 352 178 338" fill="none" stroke="{{hoodie_trim}}" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <!-- whale patch -->
+  <g transform="translate(206 300) rotate(-6)">
+    <ellipse cx="0" cy="0" rx="14" ry="9" fill="{{hoodie_trim}}"/>
+    <path d="M-14 0 L-26 -9 L-22 0 L-26 9 Z" fill="{{hoodie_trim}}"/>
+    <circle cx="7" cy="-3" r="2" fill="{{hoodie}}"/>
+  </g>
+  <!-- arm tucked under head -->
+  <path d="M120 300 C 108 306 104 320 112 330 C 122 338 140 336 148 328 Z" fill="{{hoodie}}"/>
+  <ellipse cx="122" cy="326" rx="12" ry="10" fill="{{skin}}"/>
+
+  <!-- head -->
+  <ellipse cx="94" cy="284" rx="58" ry="62" fill="{{skin}}"/>
+
+  <!-- back hair around head -->
+  <ellipse cx="94" cy="280" rx="68" ry="72" fill="{{hair_shadow}}"/>
+
+  <!-- bangs -->
+  <path d="M94 214 C 50 214 30 246 30 282 C 42 264 50 258 60 254 C 58 268 62 280 70 288 C 72 270 78 256 88 250 C 92 266 98 274 106 280 C 112 266 116 256 120 250 C 130 256 138 270 140 288 C 148 280 152 268 150 254 C 160 258 168 264 178 282 C 178 246 158 214 94 214 Z" fill="{{hair}}"/>
+  <path d="M56 250 C 74 234 98 230 116 234" fill="none" stroke="{{hair_shine}}" stroke-width="5.5" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- ahoge flopped -->
+  <path d="M92 214 C 86 196 66 190 54 200 C 70 200 82 206 88 216" fill="none" stroke="{{hair}}" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- whale clip -->
+  <g transform="translate(58 258) rotate(-16)">
+    <ellipse cx="0" cy="0" rx="13" ry="9" fill="#FFFFFF"/>
+    <path d="M-13 0 L-24 -9 L-20 0 L-24 9 Z" fill="#FFFFFF"/>
+    <circle cx="7" cy="-3" r="1.8" fill="{{outline}}"/>
+  </g>
+
+  <!-- closed eyes -->
+  <path d="M62 288 Q76 302 90 288" fill="none" stroke="{{outline}}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M100 288 Q114 302 128 288" fill="none" stroke="{{outline}}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M66 292 Q76 300 88 292" fill="none" stroke="{{skin_shadow}}" stroke-width="1.6" opacity="0.5"/>
+  <path d="M104 292 Q114 300 126 292" fill="none" stroke="{{skin_shadow}}" stroke-width="1.6" opacity="0.5"/>
+
+  <!-- mouth + blush -->
+  <path d="M88 314 Q95 320 102 314" fill="none" stroke="{{outline}}" stroke-width="3.2" stroke-linecap="round"/>
+  <ellipse cx="56" cy="306" rx="12" ry="6" fill="{{skin_shadow}}" opacity="0.55"/>
+  <ellipse cx="134" cy="306" rx="12" ry="6" fill="{{skin_shadow}}" opacity="0.55"/>
+</svg>

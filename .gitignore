@@ -1,0 +1,35 @@
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# DeepSeek-chan runtime
+*.log
+
+# ---------------------------------------------------------------------------
+# NEVER commit the rival reference recording or frames derived from it.
+# This is a friend's copyrighted screen recording, used for private reference
+# only. It must not ship in this repository.
+# ---------------------------------------------------------------------------
+2026-*-*.mkv
+2026-*-*.mp4
+rival/
+**/rival/
+contact*.png
+pet_closeup*.png
+full*.png

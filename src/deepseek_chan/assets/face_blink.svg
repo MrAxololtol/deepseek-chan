@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="320" height="400">
+  <path d="M108 140 Q130 156 152 140" fill="none" stroke="{{outline}}" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M168 140 Q190 156 212 140" fill="none" stroke="{{outline}}" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M110 145 Q130 158 150 145" fill="none" stroke="{{skin_shadow}}" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M170 145 Q190 158 210 145" fill="none" stroke="{{skin_shadow}}" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M159 170 l3 3 l-5 1" fill="{{skin_shadow}}" opacity="0.8"/>
+  <path d="M152 184 Q160 190 168 184" fill="none" stroke="{{outline}}" stroke-width="3.5" stroke-linecap="round"/>
+  <ellipse cx="104" cy="166" rx="14" ry="7" fill="{{skin_shadow}}" opacity="0.5"/>
+  <ellipse cx="216" cy="166" rx="14" ry="7" fill="{{skin_shadow}}" opacity="0.5"/>
+</svg>

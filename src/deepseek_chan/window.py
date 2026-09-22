@@ -5,18 +5,20 @@ from __future__ import annotations
 import math
 import random
 import time
+from pathlib import Path
 from typing import Optional
 
 from PyQt6.QtCore import QPoint, QPointF, Qt, QTimer
 from PyQt6.QtGui import QCursor, QGuiApplication, QPainter, QPixmap, QRegion
 from PyQt6.QtWidgets import QWidget
 
+from . import theme
 from .anim import Blinker, Mood, Particles, Spring
 from .ask import AskBox, send_to_opencode
 from .config import Config
 from .ipc import EventTail
 from .renderer import CHAR_X, CHAR_Y, WINDOW_H, WINDOW_W
-from .raster import RasterRenderer, create_renderer
+from .raster import RasterPack, RasterRenderer, create_renderer
 from .state import PetBrain, State
 
 DRAG_THRESHOLD = 6
@@ -43,6 +45,20 @@ class PetWindow(QWidget):
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating, True)
         self.resize(round(WINDOW_W * self._scale), round(WINDOW_H * self._scale))
         self.setWindowTitle("DeepSeek-chan")
+
+        self._base_pack = (
+            Path(cfg.sprite_pack).expanduser()
+            if cfg.sprite_pack
+            else Path(__file__).resolve().with_name("assets") / "adult"
+        )
+        self._theme_accent = ""
+        accent = self._current_accent()
+        if accent:
+            themed = self._themed_pack(accent)
+            if themed is not None:
+                cfg.sprite_pack = str(themed)
+                cfg.palette.bubble_border = accent
+                self._theme_accent = accent
 
         self.renderer = create_renderer(cfg)
         self.bank = self.renderer.bank
@@ -94,7 +110,45 @@ class PetWindow(QWidget):
         self._timer.setInterval(max(16, int(1000 / max(1, cfg.timing.fps))))
         self._timer.timeout.connect(self._tick)
 
+        self._theme_timer = QTimer(self)
+        self._theme_timer.setInterval(2000)
+        self._theme_timer.timeout.connect(self._poll_theme)
+        if cfg.theme_follow and not cfg.theme_color:
+            self._theme_timer.start()
+
         self._place_initial()
+
+    # ------------------------------------------------------------------ theme
+    def _current_accent(self) -> str:
+        if self.cfg.theme_color:
+            return self.cfg.theme_color
+        if self.cfg.theme_follow and self.cfg.theme_accent_file:
+            return theme.read_accent(self.cfg.theme_accent_file) or ""
+        return ""
+
+    def _themed_pack(self, accent: str):
+        if abs(theme.hue_delta(accent, self.cfg.theme_base_hue)) < 2.0:
+            return self._base_pack
+        try:
+            return theme.recolored_pack(self._base_pack, accent, self.cfg.theme_base_hue)
+        except OSError:
+            return None
+
+    def _poll_theme(self) -> None:
+        accent = self._current_accent()
+        if accent and accent != self._theme_accent:
+            self._apply_theme(accent)
+
+    def _apply_theme(self, accent: str) -> None:
+        themed = self._themed_pack(accent)
+        if themed is None:
+            return
+        self._theme_accent = accent
+        if isinstance(self.renderer, RasterRenderer):
+            self.renderer.pack = RasterPack(themed)
+        self.cfg.palette.bubble_border = accent
+        self.bank.clear()
+        self._shape_key = None
 
     # ------------------------------------------------------------------ lifecycle
     def start(self) -> None:
@@ -197,6 +251,19 @@ class PetWindow(QWidget):
             if detail == "hover" and not self._pointer_over_pet():
                 return
             self._open_ask()
+        elif kind == "theme":
+            if detail in ("", "auto"):
+                self.cfg.theme_color = ""
+                self.cfg.theme_follow = True
+                if not self._theme_timer.isActive():
+                    self._theme_timer.start()
+            else:
+                self.cfg.theme_color = detail
+                self.cfg.theme_follow = False
+                self._theme_timer.stop()
+            accent = self._current_accent()
+            if accent:
+                self._apply_theme(accent)
 
     def _pointer_over_pet(self) -> bool:
         return self.frameGeometry().contains(QCursor.pos())

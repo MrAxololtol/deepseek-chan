@@ -84,6 +84,11 @@ def cmd_ask(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_theme(args: argparse.Namespace) -> int:
+    emit("theme", args.color or "auto")
+    return 0
+
+
 def cmd_install_hotkey(args: argparse.Namespace) -> int:
     base = Path(os.environ.get("XDG_CONFIG_HOME") or (Path.home() / ".config"))
     rc = base / "sxhkd" / "sxhkdrc"
@@ -145,6 +150,10 @@ def build_parser() -> argparse.ArgumentParser:
     ask = sub.add_parser("ask", help="open the ask-opencode box (optionally only over the pet)")
     ask.add_argument("--hover", action="store_true", help="only if the pointer is over the pet")
     ask.set_defaults(func=cmd_ask)
+
+    theme = sub.add_parser("theme", help="follow the desktop accent, or set one (hex)")
+    theme.add_argument("color", nargs="?", help="hex like #b03060; omit to re-read the theme")
+    theme.set_defaults(func=cmd_theme)
 
     hotkey = sub.add_parser("install-hotkey", help="add sxhkd summon + ask bindings")
     hotkey.add_argument("--hotkey", default="super + p")

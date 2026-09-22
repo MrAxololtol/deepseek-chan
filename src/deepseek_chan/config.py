@@ -116,6 +116,13 @@ class Config:
     lock_screen_position: bool = True
     hide_on_fullscreen: bool = True
     follow_desktops: bool = True
+    # Recolour her blue parts to the desktop accent. Reads the accent from the
+    # rice's generated polybar/rofi colours (theme_accent_file); set theme_color
+    # to pin an explicit hex, or theme_follow = false to disable.
+    theme_follow: bool = True
+    theme_color: str = ""
+    theme_accent_file: str = "~/.config/polybar/colors.ini"
+    theme_base_hue: float = 227.0
     outfit: str = "hoodie"  # hoodie | hoodie_up
     sprite_pack: str = ""  # optional dir overriding bundled assets
     summon_hotkey: str = "super + p"

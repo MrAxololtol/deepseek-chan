@@ -15,6 +15,8 @@ An anime-girl desktop pet that reacts to your opencode TUI sessions, built with 
 - Follows you across workspaces (bspwm sticky) and hides over fullscreen video.
 - **Ask her anything**: Super+Alt-click the pet (or `deepseek-chan ask`) for a
   small input box; pressing Enter runs `opencode run "<your question>"`.
+- **Follows your desktop theme**: she watches the accent that `colorChange` writes
+  (polybar/rofi/kitty) and hues her hair, outfit and trim to match it live.
 - Configurable SVG palette, timing, scale, and placement.
 - A JavaScript opencode bridge and a display-free Python state machine.
 - A sprite-sheet slicer and PNG renderer with missing-pose fallbacks.
@@ -45,6 +47,8 @@ deepseek-chan run --pat
 deepseek-chan run --summon
 deepseek-chan outfit hoodie_up
 deepseek-chan ask
+deepseek-chan theme              # re-read the desktop accent
+deepseek-chan theme '#b03060'    # or pin a specific accent
 ```
 
 `deepseek-chan install-hotkey` adds an sxhkd summon binding (`Super+p`) and the
@@ -64,6 +68,7 @@ click_through = true
 start_position = "bottom-right"
 outfit = "hoodie"
 follow_desktops = true
+theme_follow = true
 
 [palette]
 hair = "#4D6BFE"

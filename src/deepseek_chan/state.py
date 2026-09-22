@@ -41,6 +41,7 @@ EVENT_KINDS = frozenset(
         "summon",
         "outfit",
         "ask",
+        "theme",
     }
 )
 

@@ -119,6 +119,10 @@ class Config:
     outfit: str = "hoodie"  # hoodie | hoodie_up
     sprite_pack: str = ""  # optional dir overriding bundled assets
     summon_hotkey: str = "super + p"
+    ask_hotkey: str = "super + alt + button1"
+    # argv for sending the ask-box message to opencode; "{prompt}" is replaced.
+    # Empty = auto-detect a terminal and run `opencode run`.
+    ask_command: List[str] = field(default_factory=list)
     palette: Palette = field(default_factory=Palette)
     timing: Timing = field(default_factory=Timing)
     physics: Physics = field(default_factory=Physics)

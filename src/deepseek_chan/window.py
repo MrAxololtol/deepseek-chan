@@ -8,10 +8,11 @@ import time
 from typing import Optional
 
 from PyQt6.QtCore import QPoint, QPointF, Qt, QTimer
-from PyQt6.QtGui import QPainter, QPixmap, QRegion
+from PyQt6.QtGui import QCursor, QGuiApplication, QPainter, QPixmap, QRegion
 from PyQt6.QtWidgets import QWidget
 
 from .anim import Blinker, Mood, Particles, Spring
+from .ask import AskBox, send_to_opencode
 from .config import Config
 from .ipc import EventTail
 from .renderer import CHAR_X, CHAR_Y, WINDOW_H, WINDOW_W
@@ -76,6 +77,7 @@ class PetWindow(QWidget):
         self._coffee_given = False
         self._sticky_ok = False
         self._last_sticky = 0.0
+        self._askbox: Optional[AskBox] = None
 
         # scruff-grab dangle / fling
         self._held = False
@@ -191,6 +193,31 @@ class PetWindow(QWidget):
             self.cfg.outfit = target
             self.bank.clear()
             self._shape_key = None
+        elif kind == "ask":
+            if detail == "hover" and not self._pointer_over_pet():
+                return
+            self._open_ask()
+
+    def _pointer_over_pet(self) -> bool:
+        return self.frameGeometry().contains(QCursor.pos())
+
+    def _open_ask(self) -> None:
+        if self._askbox is None:
+            self._askbox = AskBox()
+            self._askbox.submitted.connect(self._ask_submit)
+        geo = self.frameGeometry()
+        self._askbox.adjustSize()
+        x = geo.center().x() - self._askbox.width() // 2
+        y = geo.top() - self._askbox.height() - 8
+        screen = QGuiApplication.primaryScreen()
+        if screen is not None:
+            area = screen.availableGeometry()
+            x = max(area.left() + 4, min(area.right() - self._askbox.width() - 4, x))
+            y = max(area.top() + 4, y)
+        self._askbox.popup_at(x, y)
+
+    def _ask_submit(self, text: str) -> None:
+        send_to_opencode(self.cfg, text)
 
     def _restore_if_hidden(self) -> None:
         from .platform import current as platform

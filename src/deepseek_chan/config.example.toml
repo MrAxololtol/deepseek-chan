@@ -13,6 +13,11 @@ hide_on_fullscreen = true
 follow_desktops = true            # stay visible on every workspace (bspwm sticky)
 outfit = "hoodie"                 # hoodie | hoodie_up
 # sprite_pack = "~/my-deepseek-chan-skins"
+summon_hotkey = "super + p"
+ask_hotkey = "super + alt + button1"   # Super+Alt click her to ask opencode
+# How the ask box sends your message. "{prompt}" is replaced with what you
+# typed; empty = auto-detect a terminal and run `opencode run`.
+# ask_command = ["kitty", "--hold", "-e", "opencode", "run", "{prompt}"]
 
 [timing]
 sleep_after = 120.0               # seconds idle before she lies down

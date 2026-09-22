@@ -79,27 +79,34 @@ def cmd_outfit(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_ask(args: argparse.Namespace) -> int:
+    emit("ask", "hover" if args.hover else "")
+    return 0
+
+
 def cmd_install_hotkey(args: argparse.Namespace) -> int:
     base = Path(os.environ.get("XDG_CONFIG_HOME") or (Path.home() / ".config"))
     rc = base / "sxhkd" / "sxhkdrc"
-    if not rc.is_file():
-        print(f"no sxhkdrc found at {rc}")
-        print("add this line manually instead:")
-        print(f"    {args.hotkey}")
-        print("        deepseek-chan --summon")
-        return 1
-    text = rc.read_text(encoding="utf-8")
-    if "# >>> deepseek-chan >>>" in text:
-        print("deepseek-chan hotkey already installed")
-        return 0
+    ask_hotkey = getattr(args, "ask_hotkey", "super + alt + button1")
     block = (
         "\n# >>> deepseek-chan >>>\n"
         f"{args.hotkey}\n"
         "    deepseek-chan --summon\n"
+        f"{ask_hotkey}\n"
+        "    deepseek-chan ask --hover\n"
         "# <<< deepseek-chan <<<\n"
     )
+    if not rc.is_file():
+        print(f"no sxhkdrc found at {rc}")
+        print("add these lines manually instead:")
+        print(block)
+        return 1
+    text = rc.read_text(encoding="utf-8")
+    if "# >>> deepseek-chan >>>" in text:
+        print("deepseek-chan hotkeys already installed")
+        return 0
     rc.write_text(text + block, encoding="utf-8")
-    print(f"installed hotkey in {rc}")
+    print(f"installed hotkeys in {rc}")
     print("reload sxhkd with:  pkill -USR1 sxhkd")
     return 0
 
@@ -135,8 +142,13 @@ def build_parser() -> argparse.ArgumentParser:
     outfit.add_argument("name", nargs="?", choices=["hoodie", "hoodie_up"], default=None)
     outfit.set_defaults(func=cmd_outfit)
 
-    hotkey = sub.add_parser("install-hotkey", help="add an sxhkd summon hotkey")
+    ask = sub.add_parser("ask", help="open the ask-opencode box (optionally only over the pet)")
+    ask.add_argument("--hover", action="store_true", help="only if the pointer is over the pet")
+    ask.set_defaults(func=cmd_ask)
+
+    hotkey = sub.add_parser("install-hotkey", help="add sxhkd summon + ask bindings")
     hotkey.add_argument("--hotkey", default="super + p")
+    hotkey.add_argument("--ask-hotkey", default="super + alt + button1")
     hotkey.set_defaults(func=cmd_install_hotkey)
 
     from .doctor import configure_parser, run_checks

@@ -13,6 +13,8 @@ An anime-girl desktop pet that reacts to your opencode TUI sessions, built with 
   spring-damped momentum before she swings back to centre.
 - Pat, flick, summon, wake, and sleep events; hoodie and hoodie-up outfits.
 - Follows you across workspaces (bspwm sticky) and hides over fullscreen video.
+- **Ask her anything**: Super+Alt-click the pet (or `deepseek-chan ask`) for a
+  small input box; pressing Enter runs `opencode run "<your question>"`.
 - Configurable SVG palette, timing, scale, and placement.
 - A JavaScript opencode bridge and a display-free Python state machine.
 - A sprite-sheet slicer and PNG renderer with missing-pose fallbacks.
@@ -42,7 +44,12 @@ deepseek-chan run --demo
 deepseek-chan run --pat
 deepseek-chan run --summon
 deepseek-chan outfit hoodie_up
+deepseek-chan ask
 ```
+
+`deepseek-chan install-hotkey` adds an sxhkd summon binding (`Super+p`) and the
+ask binding (`Super+Alt+left-click`) that shows the input box only while the
+pointer is over the pet.
 
 ## Configuration
 

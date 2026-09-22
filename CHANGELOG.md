@@ -5,6 +5,16 @@ adds an entry, newest first, with the commit it shipped in.
 
 ## 2026-09-23
 
+### Ask-opencode box + pipx install — this update
+- **Ask her anything:** Super+Alt-click the pet (or `deepseek-chan ask`) opens a
+  small input box above her; Enter runs `opencode run "<question>"` in a terminal.
+  `deepseek-chan ask --hover` only opens when the pointer is over the pet; the
+  sxhkd binding uses that. The command is configurable via `ask_command` /
+  `ask_hotkey` (`{prompt}` is substituted).
+- `deepseek-chan install-hotkey` now installs the summon and ask bindings.
+- Switched to a self-contained **pipx** install so the launcher no longer depends
+  on the source checkout.
+
 ### Pat/flick show their own lines — `0cf6d8f`
 - Clicking her face no longer shows a stale "Finished thinking" bubble. Mouse
   pat and flick now go through the same reaction path as the event stream, so

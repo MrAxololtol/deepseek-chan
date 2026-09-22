@@ -58,6 +58,9 @@ class PetWindow(QWidget):
         self._pix: Optional[QPixmap] = None
         self._shape_key = None
         self._dragging = False
+        self._pressed_region = "body"
+        self._quip_index: dict[str, int] = {}
+        self._held_bubble = ""
         self._press_global = QPoint()
         self._press_local = QPoint()
         self._moved = False
@@ -127,7 +130,11 @@ class PetWindow(QWidget):
     # ------------------------------------------------------------------ events
     def _quip(self, category: str) -> str:
         options = self.cfg.quips.get(category) or []
-        return random.choice(options) if options else ""
+        if not options:
+            return ""
+        index = self._quip_index.get(category, 0)
+        self._quip_index[category] = (index + 1) % len(options)
+        return options[index]
 
     def _on_event(self, kind: str, detail: str, ts: float) -> None:
         previous = self.brain.status(ts).state
@@ -162,8 +169,13 @@ class PetWindow(QWidget):
                 self.brain.set_bubble(quip, ts)
             self.particles.spawn("heart", WINDOW_W / 2 + 40, 250, ts, life=1.6)
             self.mood.bump(0.03)
-        elif kind in ("flick", "summon", "wake"):
-            quip = self._quip("surprised")
+        elif kind == "flick":
+            quip = self._quip("flick")
+            if quip:
+                self.brain.set_bubble(quip, ts)
+            self._restore_if_hidden()
+        elif kind in ("summon", "wake"):
+            quip = self._quip("wake" if kind == "wake" else "surprised")
             if quip:
                 self.brain.set_bubble(quip, ts)
             self._restore_if_hidden()
@@ -206,6 +218,11 @@ class PetWindow(QWidget):
         self._update_working(now, status)
         self._update_dangle(now, dt)
 
+        held = self._show_held(now)
+        if held and self._held_bubble:
+            status.bubble = self._held_bubble
+            status.bubble_age = 0.0
+
         self._pix = self.renderer.compose(
             status,
             now,
@@ -218,7 +235,7 @@ class PetWindow(QWidget):
             hang_x=self._hang_x,
             hang_y=0.0,
             hang_angle=self._hang_angle,
-            **({"held": self._show_held(now)} if isinstance(self.renderer, RasterRenderer) else {}),
+            **({"held": held} if isinstance(self.renderer, RasterRenderer) else {}),
         )
         self.update()
 
@@ -304,17 +321,24 @@ class PetWindow(QWidget):
     def mousePressEvent(self, event) -> None:  # noqa: N802
         if event.button() != Qt.MouseButton.LeftButton:
             return
-        self._dragging = True
-        self._moved = False
-        self._held = True
+        now = time.time()
+        status = self.brain.status(now)
+        if status.asleep:
+            self.brain.handle("wake", "", now)
+            self._restore_if_hidden()
         self._press_global = event.globalPosition().toPoint()
         self._press_local = event.position().toPoint()
+        # dragging only starts when you grab her stomach
+        self._pressed_region = self.renderer.hit_test(
+            self._press_local.x() / self._scale, self._press_local.y() / self._scale, False
+        )
+        self._dragging = self._pressed_region == "belly"
+        self._moved = False
+        self._held = self._dragging
+        self._held_bubble = self._quip("held") if self._dragging else ""
         self._move_pos = event.globalPosition()
-        self._move_t = time.time()
+        self._move_t = now
         self._pointer_vx = 0.0
-        if self.brain.status(time.time()).asleep:
-            self.brain.handle("wake", "", time.time())
-            self._restore_if_hidden()
 
     def mouseMoveEvent(self, event) -> None:  # noqa: N802
         if not self._dragging:
@@ -341,24 +365,20 @@ class PetWindow(QWidget):
         self._held = False
         if was_drag:
             self._held_until = time.time() + self.cfg.physics.settle
+            self._held_bubble = ""
             self._remember()
             return
 
-        status = self.brain.status(time.time())
-        region = self.renderer.hit_test(
-            self._press_local.x() / self._scale, self._press_local.y() / self._scale, status.asleep
-        )
         now = time.time()
-        if status.asleep:
-            self.brain.handle("flick", "", now)
-            self._restore_if_hidden()
-        elif region == "hair":
+        region = self._pressed_region
+        if region == "hair":
             self.brain.handle("pat", "", now)
-            self.particles.spawn("heart", self._press_local.x() / self._scale, self._press_local.y() / self._scale - 40, now, life=1.6)
+            self.particles.spawn("heart", self._press_local.x() / self._scale,
+                                 self._press_local.y() / self._scale - 40, now, life=1.6)
             self.mood.bump(0.03)
         elif region == "nose":
             self.brain.handle("flick", "", now)
-        # body/head clicks are treated as neutral
+        # belly (drag), head and body clicks are neutral when not dragged
 
     # ------------------------------------------------------------------ util
     def force_state(self, state: State) -> None:

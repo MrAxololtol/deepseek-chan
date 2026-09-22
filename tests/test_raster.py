@@ -127,7 +127,7 @@ def test_window_uses_raster_renderer(pack_dir, qapp, monkeypatch):
     monkeypatch.setattr(config, "cache_dir", lambda: pack_dir)
     monkeypatch.setattr(PetWindow, "_place_initial", lambda self: None)
     cfg = Config(sprite_pack=str(pack_dir), hide_on_fullscreen=False,
-                 remember_position=False, click_through=False)
+                 remember_position=False, follow_desktops=False, click_through=False)
     window = PetWindow(cfg, demo=True)
     try:
         assert isinstance(window.renderer, RasterRenderer)

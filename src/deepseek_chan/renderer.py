@@ -318,9 +318,11 @@ class Renderer:
 
     # ------------------------------------------------------------------ hit test
     def hit_test(self, x: float, y: float, asleep: bool) -> str:
-        """Return 'hair', 'nose', 'head' or 'body' for a window-space point."""
+        """Return 'hair', 'nose', 'belly', 'head' or 'body' for a window point."""
         cx = x - CHAR_X
         cy = y - CHAR_Y
+        if 100 <= cx <= 220 and 200 <= cy <= 310:
+            return "belly"
         if asleep:
             if -20 <= cx <= 200 and 200 <= cy <= 400:
                 return "head"

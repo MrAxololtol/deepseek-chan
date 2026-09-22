@@ -163,14 +163,18 @@ class RasterRenderer(Renderer):
         return pix
 
     def hit_test(self, x: float, y: float, asleep: bool) -> str:
-        """Conservative adult-sprite head region; anatomy varies between packs."""
+        """Conservative adult-sprite regions; anatomy varies between packs.
+
+        "belly" is the grab handle for dragging; nose flicks; hair pets.
+        """
         cx, cy = x - CHAR_X, y - CHAR_Y
-        if asleep:
-            return "head" if 64 <= cx <= 256 and 160 <= cy <= 330 else "body"
-        if 130 <= cx <= 190 and 65 <= cy <= 105:
-            return "nose"
-        if 80 <= cx <= 240 and 0 <= cy <= 70:
-            return "hair"
+        if 100 <= cx <= 220 and 140 <= cy <= 320:
+            return "belly"
+        if not asleep:
+            if 130 <= cx <= 190 and 65 <= cy <= 105:
+                return "nose"
+            if 80 <= cx <= 240 and 0 <= cy <= 70:
+                return "hair"
         return "body"
 
 

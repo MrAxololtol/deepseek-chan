@@ -128,9 +128,30 @@ class Config:
             "thinking": ["Thinking\u2026", "Hmm\u2026", "Processing\u2026"],
             "thinking_hard": ["Still thinking\u2026", "This is a big one\u2026"],
             "error": ["Oh no\u2026", "That broke!", "!?"],
-            "pat": ["ehehe~", "that tickles!", "pat pat~"],
+            "pat": [
+                "ehehe~",
+                "that's the spot",
+                "pat pat~",
+                "mmm~ don't stop",
+                "okay, one more",
+            ],
+            "flick": [
+                "ah! my nose!",
+                "boop me again, I dare you",
+                "eep! not the nose!",
+                "hey! that tickles!",
+                "did you just flick me?!",
+            ],
+            "held": [
+                "wah! I can't reach the floor!",
+                "h-hey, easy with the hood!",
+                "I was comfortable, you know",
+                "is this how you treat all your pets?",
+                "put me back, I'm warning you",
+            ],
             "surprised": ["!?", "w-what!", "huh!?"],
-            "working": [],  # falls back to the tool name
+            "wake": ["mmh\u2026 five more minutes", "I'm up, I'm up!", "*yawn*"],
+            "working": [],
         }
     )
 
@@ -140,7 +161,9 @@ def _merge(obj: Any, data: Dict[str, Any]) -> Any:
         if not hasattr(obj, key):
             continue
         current = getattr(obj, key)
-        if isinstance(value, dict) and not isinstance(current, dict):
+        if isinstance(value, dict) and isinstance(current, dict):
+            current.update(value)          # e.g. [quips]: override only the keys you set
+        elif isinstance(value, dict) and not isinstance(current, dict):
             _merge(current, value)
         else:
             setattr(obj, key, value)

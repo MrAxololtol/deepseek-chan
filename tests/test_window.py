@@ -3,7 +3,7 @@ import time
 from types import SimpleNamespace
 
 import pytest
-from PyQt6.QtCore import QPoint, Qt
+from PyQt6.QtCore import Qt
 
 from deepseek_chan import config
 from deepseek_chan.config import Config
@@ -17,7 +17,8 @@ def make_window(tmp_path, monkeypatch, qapp):
     windows = []
 
     def make(**kwargs):
-        cfg = Config(hide_on_fullscreen=False, remember_position=False, **kwargs)
+        cfg = Config(hide_on_fullscreen=False, remember_position=False,
+                     follow_desktops=False, **kwargs)
         window = PetWindow(cfg, demo=True)
         windows.append(window)
         return window
@@ -48,11 +49,16 @@ def test_always_on_top_option(make_window, always_on_top):
 
 
 def test_click_coordinates_are_unscaled_before_hit_testing(make_window):
+    from PyQt6.QtCore import QPointF
+
     window = make_window(scale=2)
     window.brain.handle("wake", ts=time.time())
-    window._press_local = QPoint(240, 260)
     observed = []
     window.renderer.hit_test = lambda x, y, asleep: observed.append((x, y)) or "body"
-    event = SimpleNamespace(button=lambda: Qt.MouseButton.LeftButton)
-    window.mouseReleaseEvent(event)
+    event = SimpleNamespace(
+        button=lambda: Qt.MouseButton.LeftButton,
+        globalPosition=lambda: QPointF(480, 520),
+        position=lambda: QPointF(240, 260),
+    )
+    window.mousePressEvent(event)
     assert observed == [(120.0, 130.0)]

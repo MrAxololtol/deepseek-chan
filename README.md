@@ -72,11 +72,15 @@ finished_bubble_for = 5.0
 
 [quips]
 finished = ["All done!", "Nailed it~"]
+pat = ["ehehe~", "that's the spot", "pat pat~", "mmm~ don't stop", "okay, one more"]
+flick = ["ah! my nose!", "boop me again, I dare you", "eep! not the nose!"]
+held = ["wah! I can't reach the floor!", "h-hey, easy with the hood!"]
 ```
 
 Idle sleep and stale-session fallback take priority over deep thinking. Choose
 thresholds accordingly, or keep sending session activity while work continues.
-A `[quips]` table replaces the existing quip dictionary; omit it to keep all defaults.
+She cycles through each `[quips]` list in order; the table merges with the
+defaults, so list only the categories you want to change.
 
 ## Artwork and sprite packs
 

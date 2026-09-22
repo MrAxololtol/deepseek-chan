@@ -55,13 +55,16 @@ bubble_border = "#4D6BFE"
 bubble_text = "#CDE8FF"
 zzz = "#9FB4FF"
 
-# Things she can say. One is chosen at random; leave a list empty to fall back
-# to the tool name / generic text.
+# Things she can say. She cycles through each list in order. A [quips] table
+# merges with the defaults, so you only need to list the categories you change.
 [quips]
 finished = ["Finished thinking", "All done!", "Nailed it~"]
 thinking = ["Thinking...", "Hmm...", "Processing..."]
 thinking_hard = ["Still thinking...", "This is a big one..."]
 error = ["Oh no...", "That broke!", "!?"]
-pat = ["ehehe~", "that tickles!", "pat pat~"]
+pat = ["ehehe~", "that's the spot", "pat pat~", "mmm~ don't stop", "okay, one more"]
+flick = ["ah! my nose!", "boop me again, I dare you", "eep! not the nose!", "hey! that tickles!", "did you just flick me?!"]
+held = ["wah! I can't reach the floor!", "h-hey, easy with the hood!", "I was comfortable, you know", "is this how you treat all your pets?", "put me back, I'm warning you"]
 surprised = ["!?", "w-what!", "huh!?"]
+wake = ["mmh... five more minutes", "I'm up, I'm up!", "*yawn*"]
 working = []

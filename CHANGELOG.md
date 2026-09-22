@@ -5,6 +5,17 @@ adds an entry, newest first, with the commit it shipped in.
 
 ## 2026-09-23
 
+### Renamed to mochi + review hardening — this update
+- Project renamed from **deepseek-chan to mochi**: package `mochi`, CLI `mochi`,
+  config/cache dirs, window class and plugin (`mochi-pet.js` / `MochiPlugin`).
+  The character stays DeepSeek-themed; only the project name went neutral.
+- Shipped quips tamed (`pat`/`held`); flirtier variants are opt-in in
+  `config.example.toml`.
+- README now leads with the opencode ask box, adds a theme-vs-PNG caveat and a
+  data-and-privacy note; `demo.gif` is a real screen capture.
+- Renamed `art/adult-design` -> `art/character-designs`; neutralized the named
+  character reference in the art brief.
+
 ### Follow the desktop theme — `6aa271b`
 - The pet now watches the accent `colorChange` writes to
   `~/.config/polybar/colors.ini` (rofi/kitty/dunst share it) and **hue-shifts her

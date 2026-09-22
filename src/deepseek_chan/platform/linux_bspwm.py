@@ -70,6 +70,33 @@ def is_fullscreen() -> bool:
     return result
 
 
+def make_sticky(widget) -> bool:
+    """Float, de-border and stick the pet so it follows every desktop.
+
+    Returns True once bspwm reports the node sticky. Safe to call repeatedly:
+    it only ever toggles the flag on when the node is not already sticky.
+    """
+    try:
+        wid = int(widget.winId())
+    except (TypeError, ValueError):
+        return False
+    if wid <= 0:
+        return False
+    node = hex(wid)
+    info = _run(["bspc", "query", "-T", "-n", node])
+    if not info:
+        return False  # not managed yet; caller retries
+    if '"sticky":true' in info:
+        return True
+    if '"state":"tiled"' in info:
+        _run(["bspc", "node", node, "-t", "floating"])
+    if '"hidden":true' in info:
+        _run(["bspc", "node", node, "-g", "hidden"])
+    _run(["bspc", "node", node, "-g", "sticky"])
+    _run(["bspc", "config", "-n", node, "border_width", "0"])
+    return '"sticky":true' in _run(["bspc", "query", "-T", "-n", node])
+
+
 def set_fullscreen_hidden(widget, hidden: bool) -> None:
     auto = getattr(widget, "_auto_hidden", False)
     if hidden:
@@ -79,3 +106,4 @@ def set_fullscreen_hidden(widget, hidden: bool) -> None:
     elif auto:
         widget.show()
         widget._auto_hidden = False
+        make_sticky(widget)

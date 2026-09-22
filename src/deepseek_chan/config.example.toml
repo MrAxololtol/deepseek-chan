@@ -10,6 +10,7 @@ click_through = true
 start_position = "bottom-right"   # bottom-right | bottom-left | top-right | top-left
 remember_position = true
 hide_on_fullscreen = true
+follow_desktops = true            # stay visible on every workspace (bspwm sticky)
 outfit = "hoodie"                 # hoodie | hoodie_up
 # sprite_pack = "~/my-deepseek-chan-skins"
 

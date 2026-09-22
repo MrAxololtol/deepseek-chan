@@ -30,7 +30,11 @@ class PetWindow(QWidget):
         self._scale = float(cfg.scale)
         if not math.isfinite(self._scale) or not 0.1 <= self._scale <= 4.0:
             raise ValueError("scale must be a finite number between 0.1 and 4.0")
-        flags = Qt.WindowType.FramelessWindowHint | Qt.WindowType.Tool
+        flags = (
+            Qt.WindowType.Window
+            | Qt.WindowType.FramelessWindowHint
+            | Qt.WindowType.WindowDoesNotAcceptFocus
+        )
         if cfg.always_on_top:
             flags |= Qt.WindowType.WindowStaysOnTopHint
         self.setWindowFlags(flags)
@@ -67,6 +71,8 @@ class PetWindow(QWidget):
         self._next_flip = time.time() + random.uniform(cfg.timing.flip_min, cfg.timing.flip_max)
         self._working_since: Optional[float] = None
         self._coffee_given = False
+        self._sticky_ok = False
+        self._last_sticky = 0.0
 
         # scruff-grab dangle / fling
         self._held = False
@@ -91,6 +97,10 @@ class PetWindow(QWidget):
             self.tail.start()
         self._timer.start()
         self.show()
+        if self.cfg.follow_desktops:
+            # bspwm may not have managed the new window yet; retry from _tick.
+            self._sticky_ok = False
+            self._last_sticky = 0.0
 
     def stop(self) -> None:
         self.tail.stop()
@@ -166,6 +176,10 @@ class PetWindow(QWidget):
     def _restore_if_hidden(self) -> None:
         if not self.isVisible():
             self.show()
+            if self.cfg.follow_desktops:
+                from .platform import current as platform
+
+                self._sticky_ok = bool(platform.make_sticky(self))
 
     # ------------------------------------------------------------------ frame
     def _tick(self) -> None:
@@ -212,6 +226,10 @@ class PetWindow(QWidget):
             self._apply_mask()
 
         self._last_state = status.state
+
+        if self.cfg.follow_desktops and not self._sticky_ok and now - self._last_sticky > 1.0:
+            self._last_sticky = now
+            self._sticky_ok = bool(platform.make_sticky(self))
 
         if self.cfg.hide_on_fullscreen:
             platform.set_fullscreen_hidden(self, platform.is_fullscreen())

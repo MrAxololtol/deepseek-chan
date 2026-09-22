@@ -12,6 +12,7 @@ An anime-girl desktop pet that reacts to your opencode TUI sessions, built with 
 - Grab her by the scruff: she dangles, and a fast drag flings her with real
   spring-damped momentum before she swings back to centre.
 - Pat, flick, summon, wake, and sleep events; hoodie and hoodie-up outfits.
+- Follows you across workspaces (bspwm sticky) and hides over fullscreen video.
 - Configurable SVG palette, timing, scale, and placement.
 - A JavaScript opencode bridge and a display-free Python state machine.
 - A sprite-sheet slicer and PNG renderer with missing-pose fallbacks.
@@ -55,6 +56,7 @@ always_on_top = true
 click_through = true
 start_position = "bottom-right"
 outfit = "hoodie"
+follow_desktops = true
 
 [palette]
 hair = "#4D6BFE"

@@ -55,5 +55,10 @@ def is_fullscreen() -> bool:
     return False
 
 
+def make_sticky(widget) -> bool:
+    """No-op on platforms without a sticky/on-all-desktops concept."""
+    return False
+
+
 def set_fullscreen_hidden(widget, hidden: bool) -> None:
     return

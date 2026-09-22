@@ -115,6 +115,7 @@ class Config:
     remember_position: bool = True
     lock_screen_position: bool = True
     hide_on_fullscreen: bool = True
+    follow_desktops: bool = True
     outfit: str = "hoodie"  # hoodie | hoodie_up
     sprite_pack: str = ""  # optional dir overriding bundled assets
     summon_hotkey: str = "super + p"

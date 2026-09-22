@@ -82,4 +82,5 @@ adds an entry, newest first, with the commit it shipped in.
 ## Related repositories
 
 ### `MrAxololtol/dotfiles`
+- `093cf2a` — bspwm: autostart the pet on login (guarded, only if installed).
 - `bc55d5e` — picom: exclude `deepseek-chan` from blur, shadow, fade and rounded corners.

@@ -32,6 +32,33 @@ class Blinker:
         return now < self._closed_until
 
 
+class Spring:
+    """Frame-rate-independent 1-D damped spring (semi-implicit Euler)."""
+
+    def __init__(self, stiffness: float = 90.0, damping: float = 7.0) -> None:
+        self.stiffness = stiffness
+        self.damping = damping
+        self.x = 0.0
+        self.v = 0.0
+
+    def reset(self) -> None:
+        self.x = 0.0
+        self.v = 0.0
+
+    def nudge(self, velocity: float) -> None:
+        self.v += velocity
+
+    def update(self, dt: float, target: float = 0.0) -> float:
+        dt = max(0.0, min(dt, 0.1))
+        steps = max(1, int(dt / 0.008))
+        h = dt / steps
+        for _ in range(steps):
+            accel = (target - self.x) * self.stiffness - self.v * self.damping
+            self.v += accel * h
+            self.x += self.v * h
+        return self.x
+
+
 class Particles:
     def __init__(self) -> None:
         self.items: List[dict] = []

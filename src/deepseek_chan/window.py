@@ -11,7 +11,7 @@ from PyQt6.QtCore import QPoint, QPointF, Qt, QTimer
 from PyQt6.QtGui import QPainter, QPixmap, QRegion
 from PyQt6.QtWidgets import QWidget
 
-from .anim import Blinker, Mood, Particles
+from .anim import Blinker, Mood, Particles, Spring
 from .config import Config
 from .ipc import EventTail
 from .renderer import CHAR_X, CHAR_Y, WINDOW_H, WINDOW_W
@@ -67,6 +67,16 @@ class PetWindow(QWidget):
         self._next_flip = time.time() + random.uniform(cfg.timing.flip_min, cfg.timing.flip_max)
         self._working_since: Optional[float] = None
         self._coffee_given = False
+
+        # scruff-grab dangle / fling
+        self._held = False
+        self._held_until = 0.0
+        self._spring = Spring(cfg.physics.stiffness, cfg.physics.damping)
+        self._hang_x = 0.0
+        self._hang_angle = 0.0
+        self._pointer_vx = 0.0
+        self._move_t = 0.0
+        self._move_pos = QPointF()
 
         self.tail = EventTail(self._on_event)
         self._timer = QTimer(self)
@@ -178,6 +188,7 @@ class PetWindow(QWidget):
         self._update_ahoge(now)
         flip = self._update_flip(now, status)
         self._update_working(now, status)
+        self._update_dangle(now, dt)
 
         self._pix = self.renderer.compose(
             status,
@@ -188,7 +199,10 @@ class PetWindow(QWidget):
             mood=self.mood.value,
             ahoge_angle=self._ahoge_angle,
             flip=flip,
-            **({"held": self._dragging and self._moved} if isinstance(self.renderer, RasterRenderer) else {}),
+            hang_x=self._hang_x,
+            hang_y=0.0,
+            hang_angle=self._hang_angle,
+            **({"held": self._show_held(now)} if isinstance(self.renderer, RasterRenderer) else {}),
         )
         self.update()
 
@@ -201,6 +215,24 @@ class PetWindow(QWidget):
 
         if self.cfg.hide_on_fullscreen:
             platform.set_fullscreen_hidden(self, platform.is_fullscreen())
+
+    def _show_held(self, now: float) -> bool:
+        return self._held or now < self._held_until
+
+    def _update_dangle(self, now: float, dt: float) -> None:
+        if not self.cfg.physics.enabled:
+            self._hang_x = 0.0
+            self._hang_angle = 0.0
+            return
+        cfg = self.cfg.physics
+        if self._held and self._moved:
+            target = max(-cfg.max_offset, min(cfg.max_offset, -self._pointer_vx * cfg.lag))
+        else:
+            target = 0.0
+            self._pointer_vx *= 0.9
+        self._hang_x = self._spring.update(dt, target)
+        ratio = self._hang_x / cfg.max_offset if cfg.max_offset else 0.0
+        self._hang_angle = max(-cfg.max_swing_deg, min(cfg.max_swing_deg, ratio * cfg.max_swing_deg))
 
     def _update_ahoge(self, now: float) -> None:
         target = math.sin(now * 1.3) * 2.0
@@ -254,12 +286,26 @@ class PetWindow(QWidget):
             return
         self._dragging = True
         self._moved = False
+        self._held = True
         self._press_global = event.globalPosition().toPoint()
         self._press_local = event.position().toPoint()
+        self._move_pos = event.globalPosition()
+        self._move_t = time.time()
+        self._pointer_vx = 0.0
+        if self.brain.status(time.time()).asleep:
+            self.brain.handle("wake", "", time.time())
+            self._restore_if_hidden()
 
     def mouseMoveEvent(self, event) -> None:  # noqa: N802
         if not self._dragging:
             return
+        now = time.time()
+        dt = now - self._move_t
+        if dt > 0:
+            vx = (event.globalPosition().x() - self._move_pos.x()) / dt
+            self._pointer_vx = 0.6 * self._pointer_vx + 0.4 * vx
+            self._move_pos = event.globalPosition()
+            self._move_t = now
         delta = event.globalPosition().toPoint() - self._press_global
         if not self._moved and delta.manhattanLength() < DRAG_THRESHOLD:
             return
@@ -272,7 +318,9 @@ class PetWindow(QWidget):
             return
         was_drag = self._moved
         self._dragging = False
+        self._held = False
         if was_drag:
+            self._held_until = time.time() + self.cfg.physics.settle
             self._remember()
             return
 

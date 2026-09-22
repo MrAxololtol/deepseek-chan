@@ -127,6 +127,7 @@ class RasterRenderer(Renderer):
         particles: Optional[list[dict]] = None, cursor: Optional[QPointF] = None,
         mood: float = 0.5, asleep: bool = False, ahoge_angle: float = 0.0,
         flip: float = 0.0, held: bool = False,
+        hang_x: float = 0.0, hang_y: float = 0.0, hang_angle: float = 0.0,
     ) -> QPixmap:
         pix = QPixmap(WINDOW_W, WINDOW_H)
         pix.fill(Qt.GlobalColor.transparent)
@@ -141,7 +142,14 @@ class RasterRenderer(Renderer):
             bob = math.sin(t * 1.5) * 2.0
             x = CHAR_X + (CANVAS_W - sprite.width()) / 2
             y = CHAR_Y + CANVAS_H - 38 - sprite.height() + bob
+            painter.save()
+            if hang_angle or hang_x or hang_y:
+                painter.translate(CHAR_X + 160, CHAR_Y + 150)   # scruff / collar pivot
+                painter.rotate(hang_angle)
+                painter.translate(hang_x, hang_y)
+                painter.translate(-(CHAR_X + 160), -(CHAR_Y + 150))
             painter.drawPixmap(QPointF(x, y), sprite)
+            painter.restore()
             if status.state != State.SLEEP:
                 self._draw_bubble(painter, status)
             self._draw_pill(painter, status)

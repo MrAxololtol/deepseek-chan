@@ -9,6 +9,8 @@ An anime-girl desktop pet that reacts to your opencode TUI sessions, built with 
 ## Features
 
 - Reactions for thinking, deep thinking, tool work, completion, and errors.
+- Grab her by the scruff: she dangles, and a fast drag flings her with real
+  spring-damped momentum before she swings back to centre.
 - Pat, flick, summon, wake, and sleep events; hoodie and hoodie-up outfits.
 - Configurable SVG palette, timing, scale, and placement.
 - A JavaScript opencode bridge and a display-free Python state machine.

@@ -25,6 +25,15 @@ flip_max = 45.0
 coffee_after = 8.0                # she pulls out coffee after this long working
 fps = 12
 
+[physics]
+enabled = true                    # scruff-grab dangle and fling
+stiffness = 90.0                  # spring pull back to centre
+damping = 7.0                     # how quickly the swinging settles
+lag = 0.05                        # how far she trails a fast drag
+max_offset = 48.0                 # pixels of horizontal swing
+max_swing_deg = 22.0              # body tilt at full swing
+settle = 1.2                      # seconds the "held" pose lingers after release
+
 # Re-theme the whole character from here. These feed the {{token}} placeholders
 # baked into every SVG asset.
 [palette]

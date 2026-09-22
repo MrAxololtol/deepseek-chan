@@ -94,6 +94,19 @@ class Timing:
 
 
 @dataclass
+class Physics:
+    """Scruff-grab dangle and fling behaviour."""
+
+    enabled: bool = True
+    stiffness: float = 90.0
+    damping: float = 7.0
+    lag: float = 0.05
+    max_offset: float = 48.0
+    max_swing_deg: float = 22.0
+    settle: float = 1.2
+
+
+@dataclass
 class Config:
     scale: float = 0.9
     always_on_top: bool = True
@@ -107,6 +120,7 @@ class Config:
     summon_hotkey: str = "super + p"
     palette: Palette = field(default_factory=Palette)
     timing: Timing = field(default_factory=Timing)
+    physics: Physics = field(default_factory=Physics)
     quips: Dict[str, List[str]] = field(
         default_factory=lambda: {
             "finished": ["Finished thinking", "All done!", "Nailed it~"],

@@ -95,6 +95,9 @@ class Renderer:
         asleep: bool = False,
         ahoge_angle: float = 0.0,
         flip: float = 0.0,
+        hang_x: float = 0.0,
+        hang_y: float = 0.0,
+        hang_angle: float = 0.0,
     ) -> QPixmap:
         pix = QPixmap(WINDOW_W, WINDOW_H)
         pix.fill(Qt.GlobalColor.transparent)
@@ -106,7 +109,9 @@ class Renderer:
             self._draw_sleep(p, t)
         else:
             self._draw_standing(
-                p, status, t, blinking, cursor=cursor, mood=mood, ahoge_angle=ahoge_angle, flip=flip
+                p, status, t, blinking, cursor=cursor, mood=mood,
+                ahoge_angle=ahoge_angle, flip=flip,
+                hang_x=hang_x, hang_y=hang_y, hang_angle=hang_angle,
             )
             self._draw_bubble(p, status)
             self._draw_pill(p, status)
@@ -130,6 +135,9 @@ class Renderer:
         mood: float = 0.5,
         ahoge_angle: float = 0.0,
         flip: float = 0.0,
+        hang_x: float = 0.0,
+        hang_y: float = 0.0,
+        hang_angle: float = 0.0,
     ) -> None:
         breath = math.sin(t * 2.0) * 2.0
         bob = 0.0
@@ -146,6 +154,12 @@ class Renderer:
 
         p.save()
         p.translate(CHAR_X, CHAR_Y + breath + bob)
+        # scruff grab: swing the whole body around the collar
+        if hang_angle or hang_x or hang_y:
+            p.translate(160, 135)
+            p.rotate(hang_angle)
+            p.translate(hang_x, hang_y)
+            p.translate(-160, -135)
 
         shadow = QColor(0, 0, 0, 40)
         p.setBrush(QBrush(shadow))

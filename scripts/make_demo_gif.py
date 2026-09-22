@@ -19,13 +19,13 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from PyQt6.QtCore import QPointF, Qt  # noqa: E402
+from PyQt6.QtCore import QPointF  # noqa: E402
 from PyQt6.QtGui import QColor, QLinearGradient, QPainter, QPixmap  # noqa: E402
 from PyQt6.QtWidgets import QApplication  # noqa: E402
 
 from deepseek_chan.config import Config  # noqa: E402
-from deepseek_chan.renderer import WINDOW_H, WINDOW_W, Renderer  # noqa: E402
-from deepseek_chan.sprites import SpriteBank  # noqa: E402
+from deepseek_chan.raster import create_renderer  # noqa: E402
+from deepseek_chan.renderer import WINDOW_H, WINDOW_W  # noqa: E402
 from deepseek_chan.state import State, Status  # noqa: E402
 
 DOCS = ROOT / "docs"
@@ -55,9 +55,9 @@ def background(w: int, h: int) -> QPixmap:
 
 
 def main() -> int:
-    app = QApplication.instance() or QApplication([])
+    _app = QApplication.instance() or QApplication([])
     cfg = Config()
-    renderer = Renderer(SpriteBank(cfg.palette), cfg)
+    renderer = create_renderer(cfg)
 
     if FRAMES.exists():
         shutil.rmtree(FRAMES)

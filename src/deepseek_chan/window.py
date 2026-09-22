@@ -8,15 +8,14 @@ import time
 from typing import Optional
 
 from PyQt6.QtCore import QPoint, QPointF, Qt, QTimer
-from PyQt6.QtGui import QGuiApplication, QPainter, QPixmap, QRegion
+from PyQt6.QtGui import QPainter, QPixmap, QRegion
 from PyQt6.QtWidgets import QWidget
 
-from . import config as configmod
 from .anim import Blinker, Mood, Particles
 from .config import Config
 from .ipc import EventTail
-from .renderer import CHAR_X, CHAR_Y, WINDOW_H, WINDOW_W, Renderer
-from .sprites import SpriteBank
+from .renderer import CHAR_X, CHAR_Y, WINDOW_H, WINDOW_W
+from .raster import RasterRenderer, create_renderer
 from .state import PetBrain, State
 
 DRAG_THRESHOLD = 6
@@ -28,18 +27,20 @@ class PetWindow(QWidget):
         self.cfg = cfg
         self.demo = demo
 
-        self.setWindowFlags(
-            Qt.WindowType.FramelessWindowHint
-            | Qt.WindowType.WindowStaysOnTopHint
-            | Qt.WindowType.Tool
-        )
+        self._scale = float(cfg.scale)
+        if not math.isfinite(self._scale) or not 0.1 <= self._scale <= 4.0:
+            raise ValueError("scale must be a finite number between 0.1 and 4.0")
+        flags = Qt.WindowType.FramelessWindowHint | Qt.WindowType.Tool
+        if cfg.always_on_top:
+            flags |= Qt.WindowType.WindowStaysOnTopHint
+        self.setWindowFlags(flags)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating, True)
-        self.resize(WINDOW_W, WINDOW_H)
+        self.resize(round(WINDOW_W * self._scale), round(WINDOW_H * self._scale))
         self.setWindowTitle("DeepSeek-chan")
 
-        self.bank = SpriteBank(cfg.palette, cfg.sprite_pack)
-        self.renderer = Renderer(self.bank, cfg)
+        self.renderer = create_renderer(cfg)
+        self.bank = self.renderer.bank
         self.brain = PetBrain(
             sleep_after=cfg.timing.sleep_after,
             hard_thinking_after=cfg.timing.hard_thinking_after,
@@ -93,7 +94,7 @@ class PetWindow(QWidget):
 
         pos = platform.load_position() if self.cfg.remember_position else None
         if pos is None:
-            pos = platform.default_position(WINDOW_W, WINDOW_H, self.cfg.start_position)
+            pos = platform.default_position(self.width(), self.height(), self.cfg.start_position)
         self.move(int(pos[0]), int(pos[1]))
 
     def _remember(self) -> None:
@@ -139,7 +140,7 @@ class PetWindow(QWidget):
             quip = self._quip("pat")
             if quip:
                 self.brain.set_bubble(quip, ts)
-            self.particles.spawn("heart", self.width() / 2 + 40, 250, ts, life=1.6)
+            self.particles.spawn("heart", WINDOW_W / 2 + 40, 250, ts, life=1.6)
             self.mood.bump(0.03)
         elif kind in ("flick", "summon", "wake"):
             quip = self._quip("surprised")
@@ -173,7 +174,7 @@ class PetWindow(QWidget):
         if status.state in (State.LISTENING, State.WORKING, State.THINKING):
             blinking = self.blinker.update(now)
 
-        self._cursor = QPointF(self.mapFromGlobal(self.cursor().pos()))
+        self._cursor = QPointF(self.mapFromGlobal(self.cursor().pos())) / self._scale
         self._update_ahoge(now)
         flip = self._update_flip(now, status)
         self._update_working(now, status)
@@ -187,11 +188,12 @@ class PetWindow(QWidget):
             mood=self.mood.value,
             ahoge_angle=self._ahoge_angle,
             flip=flip,
+            **({"held": self._dragging and self._moved} if isinstance(self.renderer, RasterRenderer) else {}),
         )
         self.update()
 
         key = (status.state, self.cfg.outfit, status.asleep)
-        if key != self._shape_key:
+        if key != self._shape_key or isinstance(self.renderer, RasterRenderer):
             self._shape_key = key
             self._apply_mask()
 
@@ -234,7 +236,8 @@ class PetWindow(QWidget):
         if not self.cfg.click_through:
             self.clearMask()
             return
-        mask = self._pix.mask()
+        mask = self._pix.scaled(self.size(), Qt.AspectRatioMode.IgnoreAspectRatio,
+                                Qt.TransformationMode.SmoothTransformation).mask()
         self.setMask(QRegion(mask))
 
     # ------------------------------------------------------------------ paint
@@ -242,6 +245,7 @@ class PetWindow(QWidget):
         if self._pix is None:
             return
         painter = QPainter(self)
+        painter.scale(self._scale, self._scale)
         painter.drawPixmap(0, 0, self._pix)
 
     # ------------------------------------------------------------------ mouse
@@ -274,7 +278,7 @@ class PetWindow(QWidget):
 
         status = self.brain.status(time.time())
         region = self.renderer.hit_test(
-            self._press_local.x(), self._press_local.y(), status.asleep
+            self._press_local.x() / self._scale, self._press_local.y() / self._scale, status.asleep
         )
         now = time.time()
         if status.asleep:
@@ -282,7 +286,7 @@ class PetWindow(QWidget):
             self._restore_if_hidden()
         elif region == "hair":
             self.brain.handle("pat", "", now)
-            self.particles.spawn("heart", self._press_local.x(), self._press_local.y() - 40, now, life=1.6)
+            self.particles.spawn("heart", self._press_local.x() / self._scale, self._press_local.y() / self._scale - 40, now, life=1.6)
             self.mood.bump(0.03)
         elif region == "nose":
             self.brain.handle("flick", "", now)

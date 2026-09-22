@@ -1,0 +1,5 @@
+# Keep lint behavior consistent across Ruff releases and developer machines.
+target-version = "py39"
+
+[lint]
+select = ["E4", "E7", "E9", "F"]

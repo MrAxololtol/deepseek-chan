@@ -8,7 +8,7 @@ disturbing the art grid.
 from __future__ import annotations
 
 import math
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 from PyQt6.QtCore import QPointF, QRectF, Qt
 from PyQt6.QtGui import (
@@ -22,6 +22,7 @@ from PyQt6.QtGui import (
 )
 
 from .config import Config
+from .colors import palette_color
 from .sprites import SpriteBank
 from .state import State, Status
 
@@ -79,12 +80,7 @@ class Renderer:
         return "body.svg"
 
     def _c(self, value: str, alpha: int = 255) -> QColor:
-        color = QColor(value)
-        if value.startswith("rgba"):
-            color = QColor(value)
-        if alpha < 255:
-            color.setAlpha(alpha)
-        return color
+        return palette_color(value, alpha if alpha < 255 else None)
 
     # ------------------------------------------------------------------ compose
     def compose(
@@ -239,6 +235,8 @@ class Renderer:
 
         p.setFont(self._font)
         metrics = p.fontMetrics()
+        text = metrics.elidedText(" ".join(text.splitlines()), Qt.TextElideMode.ElideRight,
+                                  WINDOW_W - 64)
         tw = metrics.horizontalAdvance(text)
         bw = min(WINDOW_W - 24, max(96, tw + 40))
         bh = 40
@@ -270,8 +268,10 @@ class Renderer:
         p.save()
         p.setFont(self._font_small)
         metrics = p.fontMetrics()
+        label = metrics.elidedText(" ".join(label.splitlines()), Qt.TextElideMode.ElideRight,
+                                   WINDOW_W - 54)
         tw = metrics.horizontalAdvance(label)
-        pw = tw + 30
+        pw = min(WINDOW_W - 24, tw + 30)
         ph = 24
         px = (WINDOW_W - pw) / 2
         py = WINDOW_H - ph - 6

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import random
-from typing import Dict, List, Optional
+from typing import List
 
 from . import config
 

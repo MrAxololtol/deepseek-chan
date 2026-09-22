@@ -17,6 +17,7 @@ from typing import Callable, Optional
 from PyQt6.QtCore import QObject, QTimer
 
 from . import config
+from .event_stream import EventDecoder
 from .state import EVENT_KINDS
 
 
@@ -42,6 +43,7 @@ class EventTail(QObject):
         self.on_event = on_event
         self._path: Path = config.events_path()
         self._offset = 0
+        self._decoder = EventDecoder()
         self._inode: Optional[int] = None
         self._timer = QTimer(self)
         self._timer.setInterval(200)
@@ -55,6 +57,7 @@ class EventTail(QObject):
         self._timer.stop()
 
     def _reset(self, seek_end: bool) -> None:
+        self._decoder.reset()
         try:
             self._inode = self._path.stat().st_ino
         except OSError:
@@ -73,28 +76,21 @@ class EventTail(QObject):
         except OSError:
             return
         if self._inode is not None and stat.st_ino != self._inode:
-            # file was rotated/replaced
             self._offset = 0
-            self._inode = stat.st_ino
+            self._decoder.reset()
+        self._inode = stat.st_ino
         if stat.st_size < self._offset:
             self._offset = 0
+            self._decoder.reset()
         if stat.st_size == self._offset:
             return
         try:
-            with open(self._path, "r", encoding="utf-8") as fh:
+            with open(self._path, "rb") as fh:
                 fh.seek(self._offset)
-                data = fh.read()
+                # Bound work per tick so a large log cannot freeze the overlay.
+                data = fh.read(1024 * 1024)
                 self._offset = fh.tell()
         except OSError:
             return
-        for line in data.splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                record = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            kind = record.get("kind")
-            if kind in EVENT_KINDS:
-                self.on_event(kind, record.get("detail", ""), float(record.get("ts", time.time())))
+        for kind, detail, timestamp in self._decoder.feed(data, time.time()):
+            self.on_event(kind, detail, timestamp)

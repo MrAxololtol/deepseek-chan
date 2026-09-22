@@ -13,9 +13,9 @@ dir so multiple projects share a single pet.
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass, field, fields
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 try:  # Python 3.11+
     import tomllib as _toml

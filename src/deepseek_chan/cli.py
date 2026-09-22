@@ -10,7 +10,6 @@ from pathlib import Path
 
 from . import __version__, config
 from .ipc import emit
-from .state import State
 
 
 def _opencode_plugin_dir(project: bool) -> Path:
@@ -139,6 +138,12 @@ def build_parser() -> argparse.ArgumentParser:
     hotkey = sub.add_parser("install-hotkey", help="add an sxhkd summon hotkey")
     hotkey.add_argument("--hotkey", default="super + p")
     hotkey.set_defaults(func=cmd_install_hotkey)
+
+    from .doctor import configure_parser, run_checks
+
+    doctor = sub.add_parser("doctor", help="check dependencies, assets, plugin and cache")
+    configure_parser(doctor)
+    doctor.set_defaults(func=run_checks)
 
     return parser
 

@@ -21,15 +21,6 @@ Thumbs.db
 # DeepSeek-chan runtime
 *.log
 
-# ---------------------------------------------------------------------------
-# NEVER commit the rival reference recording or frames derived from it.
-# This is a friend's copyrighted screen recording, used for private reference
-# only. It must not ship in this repository.
-# ---------------------------------------------------------------------------
+# Private reference recordings (never commit third-party capture material)
 2026-*-*.mkv
 2026-*-*.mp4
-rival/
-**/rival/
-contact*.png
-pet_closeup*.png
-full*.png

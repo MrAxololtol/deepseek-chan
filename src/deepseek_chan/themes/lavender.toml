@@ -1,0 +1,11 @@
+# Lavender: soft lilac hair and plum shadows.
+[palette]
+hair = "#A18AE8"
+hair_shadow = "#65509D"
+hair_shine = "#E0D3FF"
+iris = "#A5DFFF"
+hoodie = "#302642"
+hoodie_trim = "#D1B0FF"
+bubble_border = "#B89BEC"
+bubble_text = "#F0E5FF"
+zzz = "#D1B0FF"

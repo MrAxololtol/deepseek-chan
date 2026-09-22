@@ -45,7 +45,7 @@ function classify(cmd, out) {
 function cacheDir() {
   if (process.platform === "win32") {
     const base = process.env.LOCALAPPDATA || join(homedir(), "AppData", "Local")
-    return join(base, "deepseek-chan", "Cache")
+    return join(base, "deepseek-chan", "deepseek-chan", "Cache")
   }
   if (process.platform === "darwin") {
     return join(homedir(), "Library", "Caches", "deepseek-chan")
@@ -79,10 +79,15 @@ function isRunning(pid) {
   }
 }
 
-function ensureRunning() {
+// Share an in-flight startup across hooks; the Python process owns pet.pid.
+let starting = null
+let launchedPid = null
+async function ensureRunning() {
+  if (starting) return starting
+  if (launchedPid && isRunning(launchedPid)) return
   try {
     const pid = parseInt(readFileSync(PID, "utf8").trim(), 10)
-    if (Number.isFinite(pid) && isRunning(pid)) return
+    if (Number.isFinite(pid) && pid > 0 && isRunning(pid)) return
   } catch {
     /* no pid file yet */
   }
@@ -91,18 +96,31 @@ function ensureRunning() {
     ["python3", ["-m", "deepseek_chan"]],
     ["python", ["-m", "deepseek_chan"]],
   ]
-  for (const [cmd, args] of attempts) {
-    try {
-      const child = spawn(cmd, args, { detached: true, stdio: "ignore" })
-      child.unref()
-      if (child.pid) {
-        mkdirSync(DIR, { recursive: true })
-        writeFileSync(PID, String(child.pid))
+  starting = (async () => {
+    for (const [cmd, args] of attempts) {
+      const pid = await new Promise((resolve) => {
+        try {
+          const child = spawn(cmd, args, { detached: true, stdio: "ignore" })
+          // ENOENT is emitted asynchronously; try/catch alone cannot catch it.
+          child.once("error", () => resolve(null))
+          child.once("spawn", () => {
+            child.unref()
+            resolve(child.pid || null)
+          })
+        } catch {
+          resolve(null)
+        }
+      })
+      if (pid) {
+        launchedPid = pid
         return
       }
-    } catch {
-      /* try the next interpreter */
     }
+  })()
+  try {
+    await starting
+  } finally {
+    starting = null
   }
 }
 
@@ -115,7 +133,7 @@ function think() {
 }
 
 export const DeepSeekChanPlugin = async () => {
-  ensureRunning()
+  await ensureRunning()
   emit("activity")
 
   const pending = new Map()
@@ -142,7 +160,7 @@ export const DeepSeekChanPlugin = async () => {
       }
     },
     "tool.execute.before": async (input, output) => {
-      ensureRunning()
+      await ensureRunning()
       const tool = input?.tool || ""
       if (tool === "bash" && input?.callID) {
         pending.set(input.callID, output?.args?.command || "")
@@ -159,7 +177,7 @@ export const DeepSeekChanPlugin = async () => {
       emit("activity")
     },
     "chat.message": async () => {
-      ensureRunning()
+      await ensureRunning()
     },
   }
 }

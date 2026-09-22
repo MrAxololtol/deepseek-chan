@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import subprocess
 import time
 
@@ -55,9 +56,18 @@ def is_fullscreen() -> bool:
     now = time.time()
     if now - _fullscreen_cache[0] < 1.0:
         return _fullscreen_cache[1]
-    out = _run(["bspc", "query", "-N", "-n", "focused.fullscreen"])
-    _fullscreen_cache = (now, bool(out))
-    return _fullscreen_cache[1]
+    result = False
+    # EWMH: ask the active window directly whether it is fullscreen.
+    active = _run(["xprop", "-root", "_NET_ACTIVE_WINDOW"])
+    match = re.search(r"0x[0-9a-fA-F]+", active)
+    if match:
+        state = _run(["xprop", "-id", match.group(0), "_NET_WM_STATE"])
+        result = "_NET_WM_STATE_FULLSCREEN" in state
+    # Fallback: bspwm's own fullscreen node selector on the focused desktop.
+    if not result:
+        result = bool(_run(["bspc", "query", "-N", "-n", ".fullscreen"]))
+    _fullscreen_cache = (now, result)
+    return result
 
 
 def set_fullscreen_hidden(widget, hidden: bool) -> None:

@@ -5,7 +5,15 @@ adds an entry, newest first, with the commit it shipped in.
 
 ## 2026-09-23
 
-### Ask-opencode box + pipx install — this update
+### Follow the desktop theme — `6aa271b`
+- The pet now watches the accent `colorChange` writes to
+  `~/.config/polybar/colors.ini` (rofi/kitty/dunst share it) and **hue-shifts her
+  blue parts** — hair, outfit and trim — to match live, leaving skin untouched.
+- Recolours are cached per hue delta (`~/.cache/deepseek-chan/theme-pack/`).
+- `deepseek-chan theme` re-reads the accent; `deepseek-chan theme '#hex'` pins one.
+- New config: `theme_follow`, `theme_accent_file`, `theme_color`, `theme_base_hue`.
+
+### Ask-opencode box + pipx install — `da978ab`
 - **Ask her anything:** Super+Alt-click the pet (or `deepseek-chan ask`) opens a
   small input box above her; Enter runs `opencode run "<question>"` in a terminal.
   `deepseek-chan ask --hover` only opens when the pointer is over the pet; the

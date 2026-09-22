@@ -71,10 +71,10 @@ def is_fullscreen() -> bool:
 
 
 def make_sticky(widget) -> bool:
-    """Float, de-border and stick the pet so it follows every desktop.
+    """Float, de-border, raise and stick the pet so it behaves like an overlay.
 
     Returns True once bspwm reports the node sticky. Safe to call repeatedly:
-    it only ever toggles the flag on when the node is not already sticky.
+    it only ever toggles the sticky flag on, and always re-asserts border/layer.
     """
     try:
         wid = int(widget.winId())
@@ -86,24 +86,26 @@ def make_sticky(widget) -> bool:
     info = _run(["bspc", "query", "-T", "-n", node])
     if not info:
         return False  # not managed yet; caller retries
-    if '"sticky":true' in info:
-        return True
     if '"state":"tiled"' in info:
         _run(["bspc", "node", node, "-t", "floating"])
-    if '"hidden":true' in info:
-        _run(["bspc", "node", node, "-g", "hidden"])
-    _run(["bspc", "node", node, "-g", "sticky"])
+    if '"sticky":true' not in info:
+        _run(["bspc", "node", node, "-g", "sticky"])
     _run(["bspc", "config", "-n", node, "border_width", "0"])
+    _run(["bspc", "node", node, "-l", "above"])
     return '"sticky":true' in _run(["bspc", "query", "-T", "-n", node])
 
 
 def set_fullscreen_hidden(widget, hidden: bool) -> None:
+    """Hide via opacity, never unmapping, so bspwm keeps it stocked + above."""
+    from PyQt6.QtCore import Qt
+
     auto = getattr(widget, "_auto_hidden", False)
     if hidden:
-        if widget.isVisible():
-            widget.hide()
+        widget.setWindowOpacity(0.0)
+        widget.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
         widget._auto_hidden = True
     elif auto:
-        widget.show()
+        widget.setWindowOpacity(1.0)
+        widget.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
         widget._auto_hidden = False
         make_sticky(widget)

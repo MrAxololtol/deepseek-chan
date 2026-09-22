@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 
+from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QGuiApplication
 
 from .. import config
@@ -61,4 +62,7 @@ def make_sticky(widget) -> bool:
 
 
 def set_fullscreen_hidden(widget, hidden: bool) -> None:
-    return
+    """Hide by opacity (not unmapping) so the WM never re-manages the window."""
+    widget.setWindowOpacity(0.0 if hidden else 1.0)
+    widget.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, hidden)
+    widget._auto_hidden = hidden

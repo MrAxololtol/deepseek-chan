@@ -174,12 +174,14 @@ class PetWindow(QWidget):
             self._shape_key = None
 
     def _restore_if_hidden(self) -> None:
+        from .platform import current as platform
+
         if not self.isVisible():
             self.show()
-            if self.cfg.follow_desktops:
-                from .platform import current as platform
-
-                self._sticky_ok = bool(platform.make_sticky(self))
+        if getattr(self, "_auto_hidden", False):
+            platform.set_fullscreen_hidden(self, False)
+        if self.cfg.follow_desktops:
+            self._sticky_ok = bool(platform.make_sticky(self))
 
     # ------------------------------------------------------------------ frame
     def _tick(self) -> None:

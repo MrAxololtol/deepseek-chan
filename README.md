@@ -91,6 +91,7 @@ remains as a fallback when no pack is present. See
 CLI usage, and [PNG sprite packs](docs/raster-packs.md) for replacement details.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for headless checks and contribution guidelines.
+Every change is recorded in the [changelog](CHANGELOG.md).
 
 ## Linux compositors (picom)
 

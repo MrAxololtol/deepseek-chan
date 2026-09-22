@@ -143,7 +143,7 @@ class Config:
                 "ehehe~",
                 "that's the spot",
                 "pat pat~",
-                "mmm~ don't stop",
+                "mmm~",
                 "okay, one more",
             ],
             "flick": [
@@ -155,7 +155,7 @@ class Config:
             ],
             "held": [
                 "wah! I can't reach the floor!",
-                "h-hey, easy with the hood!",
+                "h-hey, a little warning please!",
                 "I was comfortable, you know",
                 "is this how you treat all your pets?",
                 "put me back, I'm warning you",

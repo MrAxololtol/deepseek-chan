@@ -4,27 +4,33 @@
 
 An anime-girl desktop pet that reacts to your opencode TUI sessions, built with Python and PyQt6.
 
+> **The useful bit:** she doubles as a tiny second front-end to opencode.
+> Super+Alt-click her, type a question, press Enter — it runs
+> `opencode run "<your question>"` for you. Desktop pet for the fun; a
+> one-keystroke agent prompt box for the actual work.
+
 ![DeepSeek-chan desktop demo](docs/demo.gif)
 
 ## Features
 
+- **Ask opencode anything** from a little input box over the pet
+  (Super+Alt-click, or `deepseek-chan ask`) — Enter runs `opencode run`.
 - Reactions for thinking, deep thinking, tool work, completion, and errors.
 - Grab her by the scruff: she dangles, and a fast drag flings her with real
   spring-damped momentum before she swings back to centre.
 - Pat, flick, summon, wake, and sleep events; hoodie and hoodie-up outfits.
 - Follows you across workspaces (bspwm sticky) and hides over fullscreen video.
-- **Ask her anything**: Super+Alt-click the pet (or `deepseek-chan ask`) for a
-  small input box; pressing Enter runs `opencode run "<your question>"`.
 - **Follows your desktop theme**: she watches the accent that `colorChange` writes
   (polybar/rofi/kitty) and hues her hair, outfit and trim to match it live.
-- Configurable SVG palette, timing, scale, and placement.
+- Configurable timing, scale, placement, and SVG palette.
 - A JavaScript opencode bridge and a display-free Python state machine.
 - A sprite-sheet slicer and PNG renderer with missing-pose fallbacks.
 - Headless diagnostics, three alternate SVG palettes, and tested event transport.
 
 ![Character states](docs/states.png)
 
-The demo and state images are rendered offscreen from the bundled artwork.
+`demo.gif` is a real screen capture of the pet over the desktop; `states.png` is
+rendered offscreen from the bundled artwork.
 
 ## Install
 
@@ -84,15 +90,25 @@ finished_bubble_for = 5.0
 
 [quips]
 finished = ["All done!", "Nailed it~"]
-pat = ["ehehe~", "that's the spot", "pat pat~", "mmm~ don't stop", "okay, one more"]
+pat = ["ehehe~", "that's the spot", "pat pat~", "mmm~", "okay, one more"]
 flick = ["ah! my nose!", "boop me again, I dare you", "eep! not the nose!"]
-held = ["wah! I can't reach the floor!", "h-hey, easy with the hood!"]
+held = ["wah! I can't reach the floor!", "h-hey, a little warning please!"]
 ```
 
 Idle sleep and stale-session fallback take priority over deep thinking. Choose
 thresholds accordingly, or keep sending session activity while work continues.
 She cycles through each `[quips]` list in order; the table merges with the
-defaults, so list only the categories you want to change.
+defaults, so list only the categories you want to change. The shipped defaults
+are deliberately tame — see `config.example.toml` for opt-in flirtier lines.
+
+### The theme vs. the PNG character
+
+`theme_follow` recolours the **PNG character** by hue-shifting her blue parts to
+your desktop accent, and `theme_color` pins one. The `[palette]` block and the
+bundled `themes/*.toml` presets (`aurora`, `lavender`, `ember`) only affect the
+**SVG/UI** colours (bubbles, trim in the SVG renderer, particles) — they do
+**not** tint the baked-in PNG artwork. If a palette preset seems to do nothing
+visually, that's why: change `theme_follow`/`theme_color` instead.
 
 ## Artwork and sprite packs
 
@@ -104,6 +120,19 @@ CLI usage, and [PNG sprite packs](docs/raster-packs.md) for replacement details.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for headless checks and contribution guidelines.
 Every change is recorded in the [changelog](CHANGELOG.md).
+
+## Data and privacy
+
+Everything is local. The opencode bridge reads session **event types**, tool
+**names**, and — only for test/build-like commands — the tool **output**, purely
+to classify pass/fail. It writes `kind`, `detail` and a timestamp to
+`~/.cache/deepseek-chan/events.ndjson` (plus the latest event to `state.json`),
+and writes `pet.pid`. No message text, prompts or file contents are stored, and
+nothing is sent anywhere.
+
+The ask box sends the text you type to **your own** opencode (`opencode run`) and
+shows the result; it makes no network calls of its own. To stop everything,
+remove the plugin from `~/.config/opencode/plugins/` and kill the pet process.
 
 ## Linux compositors (picom)
 

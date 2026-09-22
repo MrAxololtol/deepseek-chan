@@ -57,7 +57,7 @@ The bundled pack is a 16-pose adult character with transparent backgrounds, one 
 per state under `src/deepseek_chan/assets/adult/`. Because the source sheet had
 irregular row heights, each character was cropped by its true alpha bounds and
 normalized to a common baseline and scale rather than sliced on a fixed grid. The
-original concept images live under `art/adult-design/`.
+original concept images live under `art/character-designs/`.
 
 Replacement packs work best with a clean 4×4 sheet sliced by
 `scripts/slice_sheet.py` (see [sprite-sheets.md](sprite-sheets.md)).

@@ -5,6 +5,11 @@ adds an entry, newest first, with the commit it shipped in.
 
 ## 2026-09-23
 
+### Pat/flick show their own lines — `0cf6d8f`
+- Clicking her face no longer shows a stale "Finished thinking" bubble. Mouse
+  pat and flick now go through the same reaction path as the event stream, so
+  they set their own cycling lines (and hearts/mood) correctly.
+
 ### Quips, grab-to-drag, lifted lines — `3bc040a`
 - Petting now cycles through **five** lines in order instead of picking randomly.
 - Added dedicated lines for **flicking** her nose and for being **lifted**.

@@ -88,6 +88,22 @@ CLI usage, and [PNG sprite packs](docs/raster-packs.md) for replacement details.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for headless checks and contribution guidelines.
 
+## Linux compositors (picom)
+
+A transparent overlay can be blurred, shadowed or rounded by the compositor,
+which shows up as a hazy silhouette. Exclude the pet's window class from those
+effects, for example:
+
+```conf
+blur-background-exclude = [ "class_g = 'deepseek-chan'" ];
+shadow-exclude         = [ "class_g = 'deepseek-chan'" ];
+fade-exclude           = [ "class_g = 'deepseek-chan'" ];
+rounded-corners-exclude = [ "class_g = 'deepseek-chan'" ];
+```
+
+On bspwm the pet floats, stays on the above layer, spans every desktop (sticky)
+and hides over fullscreen by changing opacity rather than unmapping.
+
 ## Credits and license
 
 Project by MrAxololtol and contributors. Built with PyQt6/Qt, platformdirs,

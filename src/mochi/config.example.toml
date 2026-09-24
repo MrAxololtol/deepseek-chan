@@ -16,7 +16,9 @@ theme_accent_file = "~/.config/polybar/colors.ini"   # where colorChange writes 
 # theme_color = "#b03060"         # pin an accent instead of following the theme
 # theme_base_hue = 227.0          # hue of the sprite's base blue (advanced)
 outfit = "hoodie"                 # hoodie | hoodie_up
+skin = "whale"                    # whale | neko  (chatbox: /neko, /whale)
 # sprite_pack = "~/my-mochi-skins"
+# neko_pack = "~/my-mochi-neko"   # override the bundled neko sprite pack
 summon_hotkey = "super + p"
 ask_hotkey = "super + alt + button1"   # Super+Alt click her to ask opencode
 # How the ask box sends your message. "{prompt}" is replaced with what you

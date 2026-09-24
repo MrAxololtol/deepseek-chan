@@ -1,0 +1,194 @@
+[
+  {
+    "name": "idle",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "blink",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "thinking",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "thinking_hard",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "working",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "finished",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "pat",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "surprised",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "error",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "sleep",
+    "source_size": [
+      1536,
+      1024
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "idle_smile",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "idle_sleepy",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "hoodie_up_idle",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "hoodie_up_thinking",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "hoodie_up_sleep",
+    "source_size": [
+      1070,
+      1470
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  },
+  {
+    "name": "held",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "output_size": [
+      512,
+      640
+    ],
+    "alpha": true
+  }
+]

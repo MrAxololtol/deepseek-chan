@@ -62,3 +62,38 @@ def test_click_coordinates_are_unscaled_before_hit_testing(make_window):
     )
     window.mousePressEvent(event)
     assert observed == [(120.0, 130.0)]
+
+
+def test_set_skin_swaps_raster_pack(make_window):
+    from mochi import skins
+
+    window = make_window(click_through=False, theme_follow=False)
+    assert window._skin == "whale"
+    assert window.set_skin("neko") is True
+    assert window._skin == "neko"
+    assert window.renderer.pack.directory == skins.bundled("neko")
+    assert window.set_skin("neko") is False
+
+
+def test_ask_submit_handles_skin_locally(make_window, monkeypatch):
+    from mochi import window as windowmod
+
+    calls = []
+    monkeypatch.setattr(windowmod, "send_to_opencode", lambda cfg, text: calls.append(text))
+    window = make_window(click_through=False, theme_follow=False)
+
+    window._ask_submit("/neko")
+    assert calls == []
+    assert window._skin == "neko"
+
+    window._ask_submit("hello there")
+    assert calls == ["hello there"]
+
+
+def test_neko_skin_ignores_theme_recolour(make_window):
+    from mochi import skins
+
+    window = make_window(click_through=False, theme_color="#b03060", theme_follow=True)
+    window.set_skin("neko")
+    assert window.renderer.pack.directory == skins.bundled("neko")
+    assert skins.follows_theme("neko") is False

@@ -124,7 +124,9 @@ class Config:
     theme_accent_file: str = "~/.config/polybar/colors.ini"
     theme_base_hue: float = 227.0
     outfit: str = "hoodie"  # hoodie | hoodie_up
+    skin: str = "whale"  # whale | neko (toggle at runtime with /neko and /whale)
     sprite_pack: str = ""  # optional dir overriding bundled assets
+    neko_pack: str = ""  # optional dir overriding the bundled neko skin
     summon_hotkey: str = "super + p"
     ask_hotkey: str = "super + alt + button1"
     # argv for sending the ask-box message to opencode; "{prompt}" is replaced.

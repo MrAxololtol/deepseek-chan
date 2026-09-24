@@ -12,9 +12,9 @@ from PyQt6.QtCore import QPoint, QPointF, Qt, QTimer
 from PyQt6.QtGui import QCursor, QGuiApplication, QPainter, QPixmap, QRegion
 from PyQt6.QtWidgets import QWidget
 
-from . import theme
+from . import skins, theme
 from .anim import Blinker, Mood, Particles, Spring
-from .ask import AskBox, send_to_opencode
+from .ask import AskBox, send_to_opencode, skin_command
 from .config import Config
 from .ipc import EventTail
 from .renderer import CHAR_X, CHAR_Y, WINDOW_H, WINDOW_W
@@ -46,11 +46,11 @@ class PetWindow(QWidget):
         self.resize(round(WINDOW_W * self._scale), round(WINDOW_H * self._scale))
         self.setWindowTitle("Mochi")
 
-        self._base_pack = (
-            Path(cfg.sprite_pack).expanduser()
-            if cfg.sprite_pack
-            else Path(__file__).resolve().with_name("assets") / "adult"
-        )
+        self._skin = skins.normalize(cfg.skin)
+        if self._skin == skins.DEFAULT:
+            self._skin = skins.remembered()
+        self._base_pack = skins.pack_for(self._skin, cfg.neko_pack, cfg.sprite_pack)
+        cfg.sprite_pack = str(self._base_pack)
         self._theme_accent = ""
         accent = self._current_accent()
         if accent:
@@ -127,10 +127,14 @@ class PetWindow(QWidget):
         return ""
 
     def _themed_pack(self, accent: str):
+        if not skins.follows_theme(self._skin):
+            return self._base_pack
         if abs(theme.hue_delta(accent, self.cfg.theme_base_hue)) < 2.0:
             return self._base_pack
         try:
-            return theme.recolored_pack(self._base_pack, accent, self.cfg.theme_base_hue)
+            return theme.recolored_pack(
+                self._base_pack, accent, self.cfg.theme_base_hue, self._skin
+            )
         except OSError:
             return None
 
@@ -149,6 +153,36 @@ class PetWindow(QWidget):
         self.cfg.palette.bubble_border = accent
         self.bank.clear()
         self._shape_key = None
+
+    # --------------------------------------------------------------------- skins
+    def set_skin(self, name: str, *, remember: bool = True) -> bool:
+        """Switch the character skin (``whale`` | ``neko``).
+
+        Returns ``True`` when the skin actually changed. Swapping reuses the
+        raster renderer's pack and re-applies any active theme recolour."""
+        target = skins.normalize(name)
+        if target == self._skin:
+            return False
+        self._skin = target
+        self.cfg.skin = target
+        self._base_pack = skins.pack_for(target, self.cfg.neko_pack, self.cfg.sprite_pack)
+        self.cfg.sprite_pack = str(self._base_pack)
+        accent = self._current_accent()
+        if accent:
+            themed = self._themed_pack(accent)
+            if themed is not None:
+                self.cfg.sprite_pack = str(themed)
+                self.cfg.palette.bubble_border = accent
+                self._theme_accent = accent
+        if isinstance(self.renderer, RasterRenderer):
+            self.renderer.pack = RasterPack(Path(self.cfg.sprite_pack))
+        self.bank.clear()
+        self._shape_key = None
+        if remember:
+            skins.remember(target)
+        quip = "nya~" if target == skins.NEKO else "back to normal~"
+        self.brain.set_bubble(quip, time.time())
+        return True
 
     # ------------------------------------------------------------------ lifecycle
     def start(self) -> None:
@@ -247,6 +281,8 @@ class PetWindow(QWidget):
             self.cfg.outfit = target
             self.bank.clear()
             self._shape_key = None
+        elif kind == "skin":
+            self.set_skin(detail or skins.NEKO)
         elif kind == "ask":
             if detail == "hover" and not self._pointer_over_pet():
                 return
@@ -284,6 +320,10 @@ class PetWindow(QWidget):
         self._askbox.popup_at(x, y)
 
     def _ask_submit(self, text: str) -> None:
+        skin = skin_command(text)
+        if skin is not None:
+            self.set_skin(skin)
+            return
         send_to_opencode(self.cfg, text)
 
     def _restore_if_hidden(self) -> None:

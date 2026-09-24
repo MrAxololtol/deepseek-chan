@@ -102,10 +102,12 @@ def _recolor_image(source: QImage, delta: float) -> QImage:
     return QImage(bytes(data), width, height, stride, QImage.Format.Format_RGBA8888).copy()
 
 
-def recolored_pack(source: Path, accent: str, base_hue: float) -> Path:
-    """Return a cached directory of sprites hue-shifted to the accent."""
+def recolored_pack(source: Path, accent: str, base_hue: float, variant: str = "") -> Path:
+    """Return a cached directory of sprites hue-shifted to the accent.
+
+    ``variant`` namespaces the cache so different skins never collide."""
     delta = hue_delta(accent, base_hue)
-    key = f"d{round(delta)}"
+    key = f"{variant}-d{round(delta)}" if variant else f"d{round(delta)}"
     out = config.cache_dir() / "theme-pack" / key
     marker = out / ".ready"
     if marker.is_file():

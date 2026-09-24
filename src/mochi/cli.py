@@ -79,6 +79,16 @@ def cmd_outfit(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_skin(args: argparse.Namespace) -> int:
+    from . import skins
+
+    name = args.name
+    if name is None:
+        name = skins.NEKO if skins.remembered() == skins.DEFAULT else skins.DEFAULT
+    emit("skin", name)
+    return 0
+
+
 def cmd_ask(args: argparse.Namespace) -> int:
     emit("ask", "hover" if args.hover else "")
     return 0
@@ -146,6 +156,10 @@ def build_parser() -> argparse.ArgumentParser:
     outfit = sub.add_parser("outfit", help="toggle or set the character outfit")
     outfit.add_argument("name", nargs="?", choices=["hoodie", "hoodie_up"], default=None)
     outfit.set_defaults(func=cmd_outfit)
+
+    skin = sub.add_parser("skin", help="switch the character skin (whale | neko)")
+    skin.add_argument("name", nargs="?", choices=["whale", "neko"], default=None)
+    skin.set_defaults(func=cmd_skin)
 
     ask = sub.add_parser("ask", help="open the ask-opencode box (optionally only over the pet)")
     ask.add_argument("--hover", action="store_true", help="only if the pointer is over the pet")

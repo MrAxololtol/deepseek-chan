@@ -64,6 +64,20 @@ def send_to_opencode(config: Config, prompt: str) -> None:
         pass
 
 
+#: chatbox commands that switch the character skin locally (never sent onward)
+_SKIN_COMMANDS = {"neko": "neko", "whale": "whale"}
+
+
+def skin_command(text: str) -> Optional[str]:
+    """Return a skin name when ``text`` is a bare ``/neko`` or ``/whale``."""
+    stripped = text.strip()
+    if not stripped.startswith("/"):
+        return None
+    rest = stripped[1:].strip()
+    token = rest.split(maxsplit=1)[0].lower() if rest else ""
+    return _SKIN_COMMANDS.get(token)
+
+
 class AskBox(QFrame):
     submitted = pyqtSignal(str)
 
@@ -85,7 +99,7 @@ class AskBox(QFrame):
         title.setObjectName("title")
         self.edit = QLineEdit()
         self.edit.setObjectName("edit")
-        self.edit.setPlaceholderText("type a question, press Enter to send\u2026")
+        self.edit.setPlaceholderText("type a question, or /neko \u00b7 /whale\u2026")
         self.edit.returnPressed.connect(self._submit)
         layout.addWidget(title)
         layout.addWidget(self.edit)

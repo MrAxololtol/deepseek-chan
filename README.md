@@ -15,6 +15,8 @@ An anime-girl desktop pet that reacts to your opencode TUI sessions, built with 
 
 - **Ask opencode anything** from a little input box over the pet
   (Super+Alt-click, or `mochi ask`) — Enter runs `opencode run`.
+- **Swap her look from the chatbox:** type `/neko` for the alternate catgirl
+  skin, `/whale` to switch back. The choice is remembered across restarts.
 - Reactions for thinking, deep thinking, tool work, completion, and errors.
 - Grab her by the scruff: she dangles, and a fast drag flings her with real
   spring-damped momentum before she swings back to centre.
@@ -52,6 +54,7 @@ mochi run --demo
 mochi run --pat
 mochi run --summon
 mochi outfit hoodie_up
+mochi skin neko
 mochi ask
 mochi theme              # re-read the desktop accent
 mochi theme '#b03060'    # or pin a specific accent
@@ -101,6 +104,20 @@ She cycles through each `[quips]` list in order; the table merges with the
 defaults, so list only the categories you want to change. The shipped defaults
 are deliberately tame — see `config.example.toml` for opt-in flirtier lines.
 
+### Skins
+
+Two character skins ship: `whale` (the default DeepSeek-chan) and `neko` (a
+cosy catgirl in a periwinkle cable-knit sweater, with a full 16-pose set
+including the hooded cat-ear `hoodie_up_*` variants). In the ask box, type
+`/neko` to switch to her and `/whale` to
+switch back — those two commands are handled locally and are **not** sent to
+opencode. The same switch is available from the CLI (`mochi skin neko`,
+`mochi skin whale`, or bare `mochi skin` to toggle), via the `skin` config key,
+and through the `skin` event. Your last choice is remembered in the cache dir
+until you switch back. Point `neko_pack` at your own sprite directory to replace
+the bundled catgirl art. The `neko` skin keeps its baked-in cobalt palette, so
+theme recolouring is skipped for it (the `whale` skin still follows the accent).
+
 ### The theme vs. the PNG character
 
 `theme_follow` recolours the **PNG character** by hue-shifting her blue parts to
@@ -112,8 +129,9 @@ visually, that's why: change `theme_follow`/`theme_color` instead.
 
 ## Artwork and sprite packs
 
-The pet ships with a bundled PNG character pack (16 poses) and uses it by default.
-Point `sprite_pack` at your own sliced directory to override it; the SVG renderer
+The pet ships with a bundled PNG character pack (16 poses) and uses it by default,
+plus the alternate `neko` catgirl pack. Point `sprite_pack` (or `neko_pack`) at your
+own sliced directory to override either; the SVG renderer
 remains as a fallback when no pack is present. See
 [sprite preparation](docs/sprite-sheets.md) for the canonical 16-cell layout and
 CLI usage, and [PNG sprite packs](docs/raster-packs.md) for replacement details.

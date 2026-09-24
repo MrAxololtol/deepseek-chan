@@ -3,6 +3,21 @@
 All notable changes to Mochi are recorded here. Every push to GitHub
 adds an entry, newest first, with the commit it shipped in.
 
+## 2026-09-24
+
+### Neko skin + chatbox skin commands — this update
+- New alternate **neko** catgirl sprite pack (periwinkle cosy outfit, full 16
+  poses including the hooded cat-ear `hoodie_up_*` variants) bundled at
+  `src/mochi/assets/neko/`, alongside the default DeepSeek-chan ("whale") pack.
+  The rest of the pack (sheet, prompts, validation) ships in
+  `mochi-catgirl-cozy-pack.zip`.
+- Ask box: type **`/neko`** to switch to the catgirl and **`/whale`** to switch
+  back. Those two commands are handled locally and are **not** sent to opencode.
+- `mochi skin neko|whale` (bare `mochi skin` toggles); new `skin` and `neko_pack`
+  config keys; new `skin` IPC event. The choice is remembered across restarts.
+- The `neko` skin keeps its baked-in cobalt palette, so theme recolouring is
+  skipped for it; recolours are also namespaced per skin.
+
 ## 2026-09-23
 
 ### Renamed to mochi + review hardening — this update

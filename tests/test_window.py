@@ -88,12 +88,3 @@ def test_ask_submit_handles_skin_locally(make_window, monkeypatch):
 
     window._ask_submit("hello there")
     assert calls == ["hello there"]
-
-
-def test_neko_skin_ignores_theme_recolour(make_window):
-    from mochi import skins
-
-    window = make_window(click_through=False, theme_color="#b03060", theme_follow=True)
-    window.set_skin("neko")
-    assert window.renderer.pack.directory == skins.bundled("neko")
-    assert skins.follows_theme("neko") is False

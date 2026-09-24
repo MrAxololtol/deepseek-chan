@@ -115,8 +115,9 @@ opencode. The same switch is available from the CLI (`mochi skin neko`,
 `mochi skin whale`, or bare `mochi skin` to toggle), via the `skin` config key,
 and through the `skin` event. Your last choice is remembered in the cache dir
 until you switch back. Point `neko_pack` at your own sprite directory to replace
-the bundled catgirl art. The `neko` skin keeps its baked-in cobalt palette, so
-theme recolouring is skipped for it (the `whale` skin still follows the accent).
+the bundled catgirl art. Both skins follow the desktop accent, so her hair and
+clothes recolour with your theme; set `theme_follow = false` to keep the baked-in
+cobalt palette instead.
 
 ### The theme vs. the PNG character
 

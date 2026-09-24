@@ -17,7 +17,7 @@ def test_bundled_paths():
 
 def test_follows_theme_per_skin():
     assert skins.follows_theme("whale") is True
-    assert skins.follows_theme("neko") is False
+    assert skins.follows_theme("neko") is True
     assert skins.follows_theme("bogus") is True
 
 

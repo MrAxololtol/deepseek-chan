@@ -15,8 +15,9 @@ adds an entry, newest first, with the commit it shipped in.
   back. Those two commands are handled locally and are **not** sent to opencode.
 - `mochi skin neko|whale` (bare `mochi skin` toggles); new `skin` and `neko_pack`
   config keys; new `skin` IPC event. The choice is remembered across restarts.
-- The `neko` skin keeps its baked-in cobalt palette, so theme recolouring is
-  skipped for it; recolours are also namespaced per skin.
+- Both skins (`whale` and `neko`) follow the desktop accent, so her hair and
+  clothes recolour with the theme; recolours are namespaced per skin so they
+  never collide.
 
 ## 2026-09-23
 

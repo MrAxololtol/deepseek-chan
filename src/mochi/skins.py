@@ -20,7 +20,7 @@ NEKO = "neko"
 SKINS = (DEFAULT, NEKO)
 
 #: whether a skin's baked-in palette should follow the desktop accent
-THEME_FOLLOW = {DEFAULT: True, NEKO: False}
+THEME_FOLLOW = {DEFAULT: True, NEKO: True}
 
 #: cache file remembering the last skin the user picked
 _SKIN_FILE = "skin.json"
